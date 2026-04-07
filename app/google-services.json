@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "147237835348",
+    "project_id": "qarzapp-2357f",
+    "storage_bucket": "qarzapp-2357f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:147237835348:android:99025a1a991f14835f13c1",
+        "android_client_info": {
+          "package_name": "com.qarz.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADZ3Z8-u6jUwJ3_2tEEQmj3uiS1Y7vQnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

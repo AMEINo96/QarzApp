@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- QarzApp Theme Colors (Material Design) -->
+    <color name="md_theme_primary">#006C4C</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_secondary">#4D6357</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_background">#FBFDF9</color>
+    <color name="md_theme_surface">#FBFDF9</color>
+</resources>

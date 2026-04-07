@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="md_theme_background">#FBFDF9</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_primary">#006C4C</color>
+    <color name="md_theme_secondary">#4D6357</color>
+    <color name="md_theme_surface">#FBFDF9</color>
+    <string name="app_name">QarzApp</string>
+    <string name="gcm_defaultSenderId" translatable="false">147237835348</string>
+    <string name="google_api_key" translatable="false">AIzaSyADZ3Z8-u6jUwJ3_2tEEQmj3uiS1Y7vQnY</string>
+    <string name="google_app_id" translatable="false">1:147237835348:android:99025a1a991f14835f13c1</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyADZ3Z8-u6jUwJ3_2tEEQmj3uiS1Y7vQnY</string>
+    <string name="google_storage_bucket" translatable="false">qarzapp-2357f.firebasestorage.app</string>
+    <string name="project_id" translatable="false">qarzapp-2357f</string>
+    <style name="Base.Theme.QarzApp" parent="Theme.Material3.DayNight.NoActionBar">
+        
+        <item name="colorPrimary">@color/md_theme_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
+        <item name="colorSecondary">@color/md_theme_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_onSecondary</item>
+        <item name="android:windowBackground">@color/md_theme_background</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+    </style>
+    <style name="Theme.QarzApp" parent="Base.Theme.QarzApp"/>
+</resources>
