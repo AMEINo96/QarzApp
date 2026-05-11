@@ -1,36 +1,15 @@
 R_DEF: Internal format may change without notice
 local
-color bottom_nav_tint
 color md_theme_background
 color md_theme_onPrimary
 color md_theme_onSecondary
-color md_theme_onSurfaceVariant
-color md_theme_outline
 color md_theme_primary
-color md_theme_primaryContainer
 color md_theme_secondary
 color md_theme_surface
-color warning_primary
-color warning_soft
-drawable bg_avatar_circle
-drawable bg_bottom_nav
-drawable bg_overdue_panel
-drawable bg_screen_gradient
-drawable bg_summary_negative
-drawable bg_summary_positive
-drawable bg_surface_panel
-drawable bg_top_panel
 drawable ic_copy
-drawable ic_google
 drawable ic_launcher_background
 drawable ic_launcher_foreground
-drawable ic_launcher_foreground_logo
 drawable ic_menu_circle
-drawable ic_nav_dashboard
-drawable ic_nav_debts
-drawable ic_nav_friends
-drawable ic_nav_loans
-drawable ic_nav_requests
 id bottom_navigation
 id btnAddFriend
 id btnBack
@@ -43,7 +22,6 @@ id btnSaveLoan
 id btnSearch
 id btnSelectDueDate
 id btnSelectLoanDate
-id btnSelectSharedFriends
 id btnSettle
 id btnToggleEdit
 id cardsLayout
@@ -80,7 +58,6 @@ id ivProfile
 id ivProfileAvatar
 id ivSearchReceipt
 id ivTabCopyUid
-id layoutSharedLoan
 id layout_active_loans
 id layout_past_loans
 id llFriendsContainer
@@ -93,8 +70,6 @@ id navigation_loans
 id navigation_notifications
 id pieChart
 id progressBar
-id rbIndividualLoan
-id rbSharedLoan
 id resultLayout
 id rvMyDebts
 id rvMyLoans
@@ -104,7 +79,6 @@ id tvDealingsTitle
 id tvFoundUserEmail
 id tvFoundUserName
 id tvFriendEmail
-id tvFriendLabel
 id tvFriendName
 id tvGoToLogin
 id tvGoToRegister
@@ -117,8 +91,6 @@ id tvLoanContext
 id tvLoanDesc
 id tvLoanUid
 id tvOweMeTotal
-id tvSharedHint
-id tvSharedSelectionSummary
 id tvTabLoanAmount
 id tvTabLoanDesc
 id tvTabLoanName
@@ -152,7 +124,3 @@ string google_storage_bucket
 string project_id
 style Base.Theme.QarzApp
 style Theme.QarzApp
-style Widget.QarzApp.Button
-style Widget.QarzApp.Button.Secondary
-style Widget.QarzApp.Card
-style Widget.QarzApp.TextInputLayout

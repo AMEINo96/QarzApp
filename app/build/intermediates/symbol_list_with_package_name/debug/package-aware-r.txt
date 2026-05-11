@@ -1360,7 +1360,6 @@ color background_floating_material_dark
 color background_floating_material_light
 color background_material_dark
 color background_material_light
-color bottom_nav_tint
 color bright_foreground_disabled_material_dark
 color bright_foreground_disabled_material_light
 color bright_foreground_inverse_material_dark
@@ -2035,10 +2034,7 @@ color material_timepicker_modebutton_tint
 color md_theme_background
 color md_theme_onPrimary
 color md_theme_onSecondary
-color md_theme_onSurfaceVariant
-color md_theme_outline
 color md_theme_primary
-color md_theme_primaryContainer
 color md_theme_secondary
 color md_theme_surface
 color mtrl_btn_bg_color_selector
@@ -2120,8 +2116,6 @@ color switch_thumb_normal_material_dark
 color switch_thumb_normal_material_light
 color tooltip_background_dark
 color tooltip_background_light
-color warning_primary
-color warning_soft
 dimen abc_action_bar_content_inset_material
 dimen abc_action_bar_content_inset_with_nav
 dimen abc_action_bar_default_height_material
@@ -3001,14 +2995,6 @@ drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable avd_hide_password
 drawable avd_show_password
-drawable bg_avatar_circle
-drawable bg_bottom_nav
-drawable bg_overdue_panel
-drawable bg_screen_gradient
-drawable bg_summary_negative
-drawable bg_summary_positive
-drawable bg_surface_panel
-drawable bg_top_panel
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -3047,11 +3033,9 @@ drawable ic_arrow_back_black_24
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
 drawable ic_copy
-drawable ic_google
 drawable ic_keyboard_black_24dp
 drawable ic_launcher_background
 drawable ic_launcher_foreground
-drawable ic_launcher_foreground_logo
 drawable ic_m3_chip_check
 drawable ic_m3_chip_checked_circle
 drawable ic_m3_chip_close
@@ -3060,11 +3044,6 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
-drawable ic_nav_dashboard
-drawable ic_nav_debts
-drawable ic_nav_friends
-drawable ic_nav_loans
-drawable ic_nav_requests
 drawable ic_search_black_24
 drawable m3_avd_hide_password
 drawable m3_avd_show_password
@@ -3257,7 +3236,6 @@ id btnSaveLoan
 id btnSearch
 id btnSelectDueDate
 id btnSelectLoanDate
-id btnSelectSharedFriends
 id btnSettle
 id btnToggleEdit
 id buttonPanel
@@ -3429,7 +3407,6 @@ id jumpToEnd
 id jumpToStart
 id labeled
 id layout
-id layoutSharedLoan
 id layout_active_loans
 id layout_past_loans
 id left
@@ -3569,8 +3546,6 @@ id progress_circular
 id progress_horizontal
 id radio
 id ratio
-id rbIndividualLoan
-id rbSharedLoan
 id rectangles
 id report_drawn
 id resultLayout
@@ -3696,7 +3671,6 @@ id tvDealingsTitle
 id tvFoundUserEmail
 id tvFoundUserName
 id tvFriendEmail
-id tvFriendLabel
 id tvFriendName
 id tvGoToLogin
 id tvGoToRegister
@@ -3709,8 +3683,6 @@ id tvLoanContext
 id tvLoanDesc
 id tvLoanUid
 id tvOweMeTotal
-id tvSharedHint
-id tvSharedSelectionSummary
 id tvTabLoanAmount
 id tvTabLoanDesc
 id tvTabLoanName
@@ -5260,10 +5232,6 @@ style Widget_MaterialComponents_Toolbar_Primary
 style Widget_MaterialComponents_Toolbar_PrimarySurface
 style Widget_MaterialComponents_Toolbar_Surface
 style Widget_MaterialComponents_Tooltip
-style Widget_QarzApp_Button
-style Widget_QarzApp_Button_Secondary
-style Widget_QarzApp_Card
-style Widget_QarzApp_TextInputLayout
 style Widget_Support_CoordinatorLayout
 styleable ActionBar background backgroundSplit backgroundStacked contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation customNavigationLayout displayOptions divider elevation height hideOnContentScroll homeAsUpIndicator homeLayout icon indeterminateProgressStyle itemPadding logo navigationMode popupTheme progressBarPadding progressBarStyle subtitle subtitleTextStyle title titleTextStyle
 styleable ActionBarLayout android_layout_gravity

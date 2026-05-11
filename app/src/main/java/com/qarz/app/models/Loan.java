@@ -10,13 +10,6 @@ public class Loan {
     private String status;
     private long loanDate;
     private long dueDate;
-    private boolean sharedLoan;
-    private String sharedGroupId;
-    private int splitCount;
-    private double originalTotalAmount;
-    private boolean settlementRequested;
-    private String settlementRequestedBy;
-    private long settlementRequestedAt;
 
     public Loan() {
         // Default constructor required for calls to DataSnapshot.getValue(Loan.class) or Firestore parsing
@@ -32,13 +25,6 @@ public class Loan {
         this.status = status;
         this.loanDate = loanDate;
         this.dueDate = dueDate;
-        this.sharedLoan = false;
-        this.sharedGroupId = null;
-        this.splitCount = 1;
-        this.originalTotalAmount = amount;
-        this.settlementRequested = false;
-        this.settlementRequestedBy = null;
-        this.settlementRequestedAt = 0L;
     }
 
     public String getLoanId() { return loanId; }
@@ -67,25 +53,4 @@ public class Loan {
 
     public long getDueDate() { return dueDate; }
     public void setDueDate(long dueDate) { this.dueDate = dueDate; }
-
-    public boolean isSharedLoan() { return sharedLoan; }
-    public void setSharedLoan(boolean sharedLoan) { this.sharedLoan = sharedLoan; }
-
-    public String getSharedGroupId() { return sharedGroupId; }
-    public void setSharedGroupId(String sharedGroupId) { this.sharedGroupId = sharedGroupId; }
-
-    public int getSplitCount() { return splitCount; }
-    public void setSplitCount(int splitCount) { this.splitCount = splitCount; }
-
-    public double getOriginalTotalAmount() { return originalTotalAmount; }
-    public void setOriginalTotalAmount(double originalTotalAmount) { this.originalTotalAmount = originalTotalAmount; }
-
-    public boolean isSettlementRequested() { return settlementRequested; }
-    public void setSettlementRequested(boolean settlementRequested) { this.settlementRequested = settlementRequested; }
-
-    public String getSettlementRequestedBy() { return settlementRequestedBy; }
-    public void setSettlementRequestedBy(String settlementRequestedBy) { this.settlementRequestedBy = settlementRequestedBy; }
-
-    public long getSettlementRequestedAt() { return settlementRequestedAt; }
-    public void setSettlementRequestedAt(long settlementRequestedAt) { this.settlementRequestedAt = settlementRequestedAt; }
 }
