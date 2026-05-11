@@ -166,6 +166,7 @@ public class DealingsActivity extends AppCompatActivity {
         Button btnSettle = view.findViewById(R.id.btnSettle);
         TextView tvLoanUid = view.findViewById(R.id.tvLoanUid);
         android.widget.ImageView ivCopyUid = view.findViewById(R.id.ivCopyUid);
+        Boolean settlementRequested = doc.getBoolean("settlementRequested");
         
         tvLoanUid.setText("UID: " + loanId);
         ivCopyUid.setOnClickListener(v -> {
@@ -213,11 +214,14 @@ public class DealingsActivity extends AppCompatActivity {
             tvContext.setText("You lent them");
             tvContext.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
             btnSettle.setVisibility(View.VISIBLE);
+            btnSettle.setText(Boolean.TRUE.equals(settlementRequested) ? "Review settlement appeal" : "Settle Debt");
             
             btnSettle.setOnClickListener(v -> {
                 new AlertDialog.Builder(this)
                     .setTitle("Settle Debt")
-                    .setMessage("Are you sure this debt is paid? This will move it to past dealings.")
+                    .setMessage(Boolean.TRUE.equals(settlementRequested)
+                            ? "The borrower has asked to settle this debt. Mark it as settled?"
+                            : "Are you sure this debt is paid? This will move it to past dealings.")
                     .setPositiveButton("Yes, Settle", (dialog, which) -> settleLoan(loanId))
                     .setNegativeButton("Cancel", null)
                     .show();
@@ -225,8 +229,18 @@ public class DealingsActivity extends AppCompatActivity {
         } else {
             tvContext.setText("You borrowed from them");
             tvContext.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-            // Borrower cannot delete their own debt until the lender presses settle.
-            btnSettle.setVisibility(View.GONE);
+            btnSettle.setVisibility("active".equals(status) ? View.VISIBLE : View.GONE);
+            btnSettle.setText(Boolean.TRUE.equals(settlementRequested) ? "Settlement Appeal Sent" : "Appeal for Settlement");
+            btnSettle.setEnabled(!Boolean.TRUE.equals(settlementRequested));
+            btnSettle.setBackgroundColor(Color.parseColor(Boolean.TRUE.equals(settlementRequested) ? "#9E9E9E" : "#1565C0"));
+            btnSettle.setOnClickListener(v -> {
+                new AlertDialog.Builder(this)
+                        .setTitle("Appeal for Settlement")
+                        .setMessage("Send a settlement request to the lender for this debt?")
+                        .setPositiveButton("Send Appeal", (dialog, which) -> requestSettlement(loanId))
+                        .setNegativeButton("Cancel", null)
+                        .show();
+            });
         }
 
         if ("settled".equals(status)) {
@@ -242,8 +256,25 @@ public class DealingsActivity extends AppCompatActivity {
     }
 
     private void settleLoan(String loanId) {
-        db.collection("loans").document(loanId).update("status", "settled")
+        db.collection("loans").document(loanId).update(
+                "status", "settled",
+                "settlementRequested", false,
+                "settlementRequestedBy", null,
+                "settlementRequestedAt", 0L
+        )
             .addOnSuccessListener(aVoid -> Toast.makeText(this, "Debt marked as Settled!", Toast.LENGTH_SHORT).show())
             .addOnFailureListener(e -> Toast.makeText(this, "Failed to settle debt.", Toast.LENGTH_SHORT).show());
+    }
+
+    private void requestSettlement(String loanId) {
+        db.collection("loans").document(loanId).update(
+                "settlementRequested", true,
+                "settlementRequestedBy", currentUserId,
+                "settlementRequestedAt", System.currentTimeMillis()
+        ).addOnSuccessListener(aVoid ->
+                Toast.makeText(this, "Settlement appeal sent to lender.", Toast.LENGTH_SHORT).show()
+        ).addOnFailureListener(e ->
+                Toast.makeText(this, "Failed to send settlement appeal.", Toast.LENGTH_SHORT).show()
+        );
     }
 }

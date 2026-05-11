@@ -2,26 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_menu_circle"
+        android:icon="@drawable/ic_nav_dashboard"
         android:title="Dashboard" />
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_menu_circle"
+        android:icon="@drawable/ic_nav_requests"
         android:title="Requests" />
 
     <item
         android:id="@+id/navigation_friends"
-        android:icon="@drawable/ic_menu_circle"
+        android:icon="@drawable/ic_nav_friends"
         android:title="Friends" />
 
     <item
         android:id="@+id/navigation_loans"
-        android:icon="@drawable/ic_menu_circle"
+        android:icon="@drawable/ic_nav_loans"
         android:title="My Loans" />
 
     <item
         android:id="@+id/navigation_debts"
-        android:icon="@drawable/ic_menu_circle"
+        android:icon="@drawable/ic_nav_debts"
         android:title="My Debts" />
 </menu>

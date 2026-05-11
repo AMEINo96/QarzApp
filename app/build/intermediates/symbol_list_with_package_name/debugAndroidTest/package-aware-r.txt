@@ -1,0 +1,3 @@
+com.qarz.app.test
+style WhiteBackgroundDialogTheme
+style WhiteBackgroundTheme
