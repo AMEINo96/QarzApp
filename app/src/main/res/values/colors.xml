@@ -2,9 +2,14 @@
 <resources>
     <!-- QarzApp Theme Colors (Material Design) -->
     <color name="md_theme_primary">#006C4C</color>
+    <color name="md_theme_primaryContainer">#97F8C8</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_secondary">#4D6357</color>
     <color name="md_theme_onSecondary">#FFFFFF</color>
     <color name="md_theme_background">#FBFDF9</color>
     <color name="md_theme_surface">#FBFDF9</color>
+    <color name="md_theme_outline">#6F7973</color>
+    <color name="md_theme_onSurfaceVariant">#3F4944</color>
+    <color name="warning_primary">#B3261E</color>
+    <color name="warning_soft">#FDECEA</color>
 </resources>

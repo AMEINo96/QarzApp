@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNav;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    private int pendingBorrowerRequests = 0;
+    private int pendingSettlementAppeals = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,20 +88,35 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
 
-                    int count = 0;
-                    if (value != null) {
-                        count = value.size(); // Number of pending requests
+                    pendingBorrowerRequests = value != null ? value.size() : 0;
+                    updateNotificationBadge();
+                });
+
+        db.collection("loans")
+                .whereEqualTo("lenderId", currentUserId)
+                .whereEqualTo("status", "active")
+                .whereEqualTo("settlementRequested", true)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        Log.w("MainActivity", "Settlement appeal listener failed.", error);
+                        return;
                     }
 
-                    BadgeDrawable badge = bottomNav.getOrCreateBadge(R.id.navigation_notifications);
-                    if (count > 0) {
-                        badge.setVisible(true);
-                        badge.setNumber(count);
-                        badge.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
-                    } else {
-                        badge.setVisible(false);
-                        badge.clearNumber();
-                    }
+                    pendingSettlementAppeals = value != null ? value.size() : 0;
+                    updateNotificationBadge();
                 });
+    }
+
+    private void updateNotificationBadge() {
+        int count = pendingBorrowerRequests + pendingSettlementAppeals;
+        BadgeDrawable badge = bottomNav.getOrCreateBadge(R.id.navigation_notifications);
+        if (count > 0) {
+            badge.setVisible(true);
+            badge.setNumber(count);
+            badge.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
+        } else {
+            badge.setVisible(false);
+            badge.clearNumber();
+        }
     }
 }

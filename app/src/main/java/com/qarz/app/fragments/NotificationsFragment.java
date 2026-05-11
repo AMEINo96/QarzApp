@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.qarz.app.R;
 
@@ -45,10 +44,8 @@ public class NotificationsFragment extends Fragment {
         if (mAuth.getCurrentUser() != null) {
             currentUserId = mAuth.getCurrentUser().getUid();
             loadAllRequests();
-        } else {
-            if (getContext() != null) {
-                Toast.makeText(getContext(), "Not authenticated", Toast.LENGTH_SHORT).show();
-            }
+        } else if (getContext() != null) {
+            Toast.makeText(getContext(), "Not authenticated", Toast.LENGTH_SHORT).show();
         }
         return view;
     }
@@ -68,41 +65,64 @@ public class NotificationsFragment extends Fragment {
                             }
                         }
                     }
-                    loadLoanRequests();
+                    loadBorrowerLoanRequests();
                 })
-                .addOnFailureListener(e -> loadLoanRequests());
+                .addOnFailureListener(e -> loadBorrowerLoanRequests());
     }
 
-    private void loadLoanRequests() {
+    private void loadBorrowerLoanRequests() {
         db.collection("loans")
                 .whereEqualTo("borrowerId", currentUserId)
-                //.orderBy("timestamp", Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                        loadLoanRequestUI(doc);
+                    }
+                    loadSettlementAppealsForLender();
+                })
+                .addOnFailureListener(e -> {
+                    loadSettlementAppealsForLender();
+                    if (getContext() != null) {
+                        Toast.makeText(getContext(), "Failed to load borrower requests.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void loadSettlementAppealsForLender() {
+        db.collection("loans")
+                .whereEqualTo("lenderId", currentUserId)
+                .whereEqualTo("status", "active")
+                .whereEqualTo("settlementRequested", true)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     progressBar.setVisibility(View.GONE);
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                        loadLoanRequestUI(doc);
+                        loadSettlementAppealUI(doc);
                     }
                 })
                 .addOnFailureListener(e -> {
                     progressBar.setVisibility(View.GONE);
                     if (getContext() != null) {
-                        Toast.makeText(getContext(), "Failed to load loans. Firebase Index might be building.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Failed to load settlement appeals.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     private void loadFriendRequestUI(String friendId) {
         db.collection("users").document(friendId).get().addOnSuccessListener(userDoc -> {
-            if (getContext() == null) return;
+            if (getContext() == null) {
+                return;
+            }
             String name = userDoc.getString("name");
-            if (name == null) name = "Unknown User";
+            if (name == null) {
+                name = "Unknown User";
+            }
 
             TextView txt = new TextView(getContext());
             txt.setText("\nFriend Request from: " + name);
             txt.setTextSize(16);
             txt.setPadding(0, 16, 0, 16);
-            
+
             Button btnAccept = new Button(getContext());
             btnAccept.setText("Accept Friend");
             btnAccept.setBackgroundColor(Color.parseColor("#2E7D32"));
@@ -118,14 +138,14 @@ public class NotificationsFragment extends Fragment {
     private void acceptFriendRequest(String friendId, View textCard, Button btn) {
         btn.setEnabled(false);
         db.collection("connections").document(currentUserId).update(friendId, "true")
-            .addOnSuccessListener(aVoid -> {
-                db.collection("connections").document(friendId).update(currentUserId, "true");
-                llRequestsContainer.removeView(textCard);
-                llRequestsContainer.removeView(btn);
-                if (getContext() != null) {
-                    Toast.makeText(getContext(), "Friend Accepted", Toast.LENGTH_SHORT).show();
-                }
-            });
+                .addOnSuccessListener(aVoid -> {
+                    db.collection("connections").document(friendId).update(currentUserId, "true");
+                    llRequestsContainer.removeView(textCard);
+                    llRequestsContainer.removeView(btn);
+                    if (getContext() != null) {
+                        Toast.makeText(getContext(), "Friend Accepted", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void loadLoanRequestUI(QueryDocumentSnapshot loanDoc) {
@@ -134,17 +154,45 @@ public class NotificationsFragment extends Fragment {
         Double amount = loanDoc.getDouble("amount");
         String desc = loanDoc.getString("description");
         String status = loanDoc.getString("status");
+        Boolean sharedLoan = loanDoc.getBoolean("sharedLoan");
+        Long splitCount = loanDoc.getLong("splitCount");
+        Double originalTotal = loanDoc.getDouble("originalTotalAmount");
+        Boolean settlementRequested = loanDoc.getBoolean("settlementRequested");
 
         db.collection("users").document(lenderId).get().addOnSuccessListener(userDoc -> {
-            if (getContext() == null) return;
+            if (getContext() == null) {
+                return;
+            }
             String name = userDoc.getString("name");
-            if (name == null) name = "Unknown";
+            if (name == null) {
+                name = "Unknown";
+            }
+
+            StringBuilder details = new StringBuilder();
+            details.append("\nLoan (").append(status != null ? status.toUpperCase() : "PENDING").append(")\n")
+                    .append("From: ").append(name)
+                    .append("\nAmount: Rs. ").append(String.format(java.util.Locale.getDefault(), "%.2f", amount != null ? amount : 0.0))
+                    .append("\nDesc: ").append(desc != null ? desc : "No description");
+
+            if (Boolean.TRUE.equals(sharedLoan) && splitCount != null && splitCount > 1) {
+                details.append("\nShared split: ")
+                        .append(splitCount)
+                        .append(" friends");
+                if (originalTotal != null && originalTotal > 0) {
+                    details.append(" from Rs. ")
+                            .append(String.format(java.util.Locale.getDefault(), "%.2f", originalTotal));
+                }
+            }
+
+            if ("active".equals(status) && Boolean.TRUE.equals(settlementRequested)) {
+                details.append("\nSettlement appeal: waiting on lender");
+            }
 
             TextView txt = new TextView(getContext());
-            txt.setText(String.format("\nLoan (%s)\nFrom: %s\nAmount: $%.2f\nDesc: %s", status != null ? status.toUpperCase() : "PENDING", name, amount != null ? amount : 0.0, desc));
+            txt.setText(details.toString());
             txt.setTextSize(16);
             txt.setPadding(0, 16, 0, 16);
-            
+
             llRequestsContainer.addView(txt);
 
             if ("pending".equals(status)) {
@@ -165,25 +213,24 @@ public class NotificationsFragment extends Fragment {
                     btnAccept.setEnabled(false);
                     btnReject.setEnabled(false);
                     db.collection("loans").document(loanId).update("status", "active")
-                        .addOnSuccessListener(aVoid -> {
-                            llRequestsContainer.removeView(txt);
-                            llRequestsContainer.removeView(buttonsGroup);
-                            Toast.makeText(getContext(), "Loan Approved!", Toast.LENGTH_SHORT).show();
-                            loadAllRequests(); // Refresh history log visually
-                        });
+                            .addOnSuccessListener(aVoid -> {
+                                llRequestsContainer.removeView(txt);
+                                llRequestsContainer.removeView(buttonsGroup);
+                                Toast.makeText(getContext(), "Loan Approved!", Toast.LENGTH_SHORT).show();
+                                loadAllRequests();
+                            });
                 });
 
                 btnReject.setOnClickListener(v -> {
                     btnAccept.setEnabled(false);
                     btnReject.setEnabled(false);
-                    // Updated logic: Set status to rejected instead of deleting
                     db.collection("loans").document(loanId).update("status", "rejected")
-                        .addOnSuccessListener(aVoid -> {
-                            llRequestsContainer.removeView(txt);
-                            llRequestsContainer.removeView(buttonsGroup);
-                            Toast.makeText(getContext(), "Loan Rejected.", Toast.LENGTH_SHORT).show();
-                            loadAllRequests(); // Refresh history log visually
-                        });
+                            .addOnSuccessListener(aVoid -> {
+                                llRequestsContainer.removeView(txt);
+                                llRequestsContainer.removeView(buttonsGroup);
+                                Toast.makeText(getContext(), "Loan Rejected.", Toast.LENGTH_SHORT).show();
+                                loadAllRequests();
+                            });
                 });
 
                 buttonsGroup.addView(btnAccept);
@@ -192,31 +239,105 @@ public class NotificationsFragment extends Fragment {
 
             } else if ("active".equals(status)) {
                 TextView tvStatus = new TextView(getContext());
-                tvStatus.setText("Approved");
-                tvStatus.setTextColor(Color.parseColor("#2E7D32")); // Green
+                tvStatus.setText(Boolean.TRUE.equals(settlementRequested) ? "Appeal sent to lender" : "Approved");
+                tvStatus.setTextColor(Color.parseColor("#2E7D32"));
                 tvStatus.setTypeface(null, android.graphics.Typeface.BOLD);
                 tvStatus.setTextSize(15);
                 tvStatus.setPadding(0, 0, 0, 16);
                 llRequestsContainer.addView(tvStatus);
-                
+
             } else if ("rejected".equals(status)) {
                 TextView tvStatus = new TextView(getContext());
                 tvStatus.setText("Rejected");
-                tvStatus.setTextColor(Color.parseColor("#C62828")); // Red
+                tvStatus.setTextColor(Color.parseColor("#C62828"));
                 tvStatus.setTypeface(null, android.graphics.Typeface.BOLD);
                 tvStatus.setTextSize(15);
                 tvStatus.setPadding(0, 0, 0, 16);
                 llRequestsContainer.addView(tvStatus);
-                
+
             } else if ("settled".equals(status)) {
                 TextView tvStatus = new TextView(getContext());
-                tvStatus.setText("Settled by Lender");
-                tvStatus.setTextColor(Color.parseColor("#2E7D32")); // Appealing green
+                tvStatus.setText("Settled by lender");
+                tvStatus.setTextColor(Color.parseColor("#2E7D32"));
                 tvStatus.setTypeface(null, android.graphics.Typeface.BOLD);
                 tvStatus.setTextSize(15);
                 tvStatus.setPadding(0, 0, 0, 16);
                 llRequestsContainer.addView(tvStatus);
             }
+        });
+    }
+
+    private void loadSettlementAppealUI(QueryDocumentSnapshot loanDoc) {
+        String loanId = loanDoc.getId();
+        String borrowerId = loanDoc.getString("borrowerId");
+        Double amount = loanDoc.getDouble("amount");
+        String desc = loanDoc.getString("description");
+
+        db.collection("users").document(borrowerId).get().addOnSuccessListener(userDoc -> {
+            if (getContext() == null) {
+                return;
+            }
+            String name = userDoc.getString("name");
+            if (name == null) {
+                name = "Unknown borrower";
+            }
+
+            TextView txt = new TextView(getContext());
+            txt.setText(String.format(java.util.Locale.getDefault(),
+                    "\nSettlement Appeal\nFrom: %s\nAmount: Rs. %.2f\nDesc: %s",
+                    name, amount != null ? amount : 0.0, desc != null ? desc : "No description"));
+            txt.setTextSize(16);
+            txt.setPadding(0, 16, 0, 16);
+
+            LinearLayout buttonsGroup = new LinearLayout(getContext());
+            buttonsGroup.setOrientation(LinearLayout.HORIZONTAL);
+
+            Button btnApprove = new Button(getContext());
+            btnApprove.setText("Settle");
+            btnApprove.setBackgroundColor(Color.parseColor("#2E7D32"));
+            btnApprove.setTextColor(Color.WHITE);
+
+            Button btnDecline = new Button(getContext());
+            btnDecline.setText("Keep Active");
+            btnDecline.setBackgroundColor(Color.parseColor("#6D4C41"));
+            btnDecline.setTextColor(Color.WHITE);
+
+            btnApprove.setOnClickListener(v -> {
+                btnApprove.setEnabled(false);
+                btnDecline.setEnabled(false);
+                db.collection("loans").document(loanId).update(
+                        "status", "settled",
+                        "settlementRequested", false,
+                        "settlementRequestedBy", null,
+                        "settlementRequestedAt", 0L
+                ).addOnSuccessListener(aVoid -> {
+                    llRequestsContainer.removeView(txt);
+                    llRequestsContainer.removeView(buttonsGroup);
+                    Toast.makeText(getContext(), "Loan settled.", Toast.LENGTH_SHORT).show();
+                    loadAllRequests();
+                });
+            });
+
+            btnDecline.setOnClickListener(v -> {
+                btnApprove.setEnabled(false);
+                btnDecline.setEnabled(false);
+                db.collection("loans").document(loanId).update(
+                        "settlementRequested", false,
+                        "settlementRequestedBy", null,
+                        "settlementRequestedAt", 0L
+                ).addOnSuccessListener(aVoid -> {
+                    llRequestsContainer.removeView(txt);
+                    llRequestsContainer.removeView(buttonsGroup);
+                    Toast.makeText(getContext(), "Settlement appeal declined.", Toast.LENGTH_SHORT).show();
+                    loadAllRequests();
+                });
+            });
+
+            buttonsGroup.addView(btnApprove);
+            buttonsGroup.addView(btnDecline);
+
+            llRequestsContainer.addView(txt);
+            llRequestsContainer.addView(buttonsGroup);
         });
     }
 }
