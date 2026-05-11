@@ -2,6 +2,8 @@ package com.qarz.app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.qarz.app.MainActivity;
 import com.qarz.app.R;
+import com.qarz.app.utils.InputFormatters;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,8 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-    // RegEx Patterns
-    private static final String CNIC_PATTERN = "^\\d{5}-\\d{7}-\\d{1}$";
+    // RegEx Patterns (matched against raw/stripped values)
+    private static final String CNIC_PATTERN  = "^\\d{5}-\\d{7}-\\d{1}$";
     private static final String PHONE_PATTERN = "^03\\d{9}$";
 
     @Override
@@ -44,57 +47,112 @@ public class RegisterActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         // Basic Info
-        etRegName = findViewById(R.id.etRegName);
-        etRegEmail = findViewById(R.id.etRegEmail);
+        etRegName     = findViewById(R.id.etRegName);
+        etRegEmail    = findViewById(R.id.etRegEmail);
         etRegPassword = findViewById(R.id.etRegPassword);
 
         // KYC
-        etRegCnic = findViewById(R.id.etRegCnic);
-        etRegPhone = findViewById(R.id.etRegPhone);
-        etRegCity = findViewById(R.id.etRegCity);
-        etRegDob = findViewById(R.id.etRegDob);
+        etRegCnic    = findViewById(R.id.etRegCnic);
+        etRegPhone   = findViewById(R.id.etRegPhone);
+        etRegCity    = findViewById(R.id.etRegCity);
+        etRegDob     = findViewById(R.id.etRegDob);
         etRegAddress = findViewById(R.id.etRegAddress);
 
         // Guarantor
-        etGuarantorName = findViewById(R.id.etGuarantorName);
-        etGuarantorPhone = findViewById(R.id.etGuarantorPhone);
+        etGuarantorName     = findViewById(R.id.etGuarantorName);
+        etGuarantorPhone    = findViewById(R.id.etGuarantorPhone);
         etGuarantorRelation = findViewById(R.id.etGuarantorRelation);
 
         btnRegister = findViewById(R.id.btnRegister);
         tvGoToLogin = findViewById(R.id.tvGoToLogin);
 
-        btnRegister.setOnClickListener(v -> validateAndRegister());
+        // ── Attach Input Formatters ──────────────────────────────────────────
+        InputFormatters.attachCnicFormatter(etRegCnic);
+        InputFormatters.attachPhoneFormatter(etRegPhone);
+        InputFormatters.attachPhoneFormatter(etGuarantorPhone);
+        InputFormatters.attachDateFormatter(etRegDob);
 
+        // Name → proper-case (capitalize each word)
+        etRegName.addTextChangedListener(new TextWatcher() {
+            private boolean isFormatting;
+            @Override public void beforeTextChanged(CharSequence s, int st, int c, int a) {}
+            @Override public void onTextChanged(CharSequence s, int st, int b, int c) {}
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (isFormatting) return;
+                String text = editable.toString();
+                String formatted = toProperCase(text);
+                if (!text.equals(formatted)) {
+                    isFormatting = true;
+                    etRegName.setText(formatted);
+                    etRegName.setSelection(formatted.length());
+                    isFormatting = false;
+                }
+            }
+        });
+
+        // Email → force lowercase (no capitals)
+        etRegEmail.addTextChangedListener(new TextWatcher() {
+            private boolean isFormatting;
+            @Override public void beforeTextChanged(CharSequence s, int st, int c, int a) {}
+            @Override public void onTextChanged(CharSequence s, int st, int b, int c) {}
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (isFormatting) return;
+                String text = editable.toString();
+                String lower = text.toLowerCase();
+                if (!text.equals(lower)) {
+                    isFormatting = true;
+                    etRegEmail.setText(lower);
+                    etRegEmail.setSelection(lower.length());
+                    isFormatting = false;
+                }
+            }
+        });
+
+        btnRegister.setOnClickListener(v -> validateAndRegister());
         tvGoToLogin.setOnClickListener(v -> finish());
     }
 
+    private static String toProperCase(String s) {
+        if (s == null || s.isEmpty()) return s;
+        StringBuilder sb = new StringBuilder();
+        boolean nextUpper = true;
+        for (char c : s.toCharArray()) {
+            if (c == ' ') { nextUpper = true; sb.append(c); }
+            else if (nextUpper) { sb.append(Character.toUpperCase(c)); nextUpper = false; }
+            else { sb.append(Character.toLowerCase(c)); }
+        }
+        return sb.toString();
+    }
+
     private void validateAndRegister() {
-        String name = etRegName.getText().toString().trim();
-        String email = etRegEmail.getText().toString().trim();
+        String name     = etRegName.getText().toString().trim();
+        String email    = etRegEmail.getText().toString().trim().toLowerCase();
         String password = etRegPassword.getText().toString().trim();
-        
-        String cnic = etRegCnic.getText().toString().trim();
-        String phone = etRegPhone.getText().toString().trim();
-        String city = etRegCity.getText().toString().trim();
-        String dob = etRegDob.getText().toString().trim();
+
+        String cnic    = etRegCnic.getText().toString().trim();
+        String phone   = etRegPhone.getText().toString().trim();
+        String city    = etRegCity.getText().toString().trim();
+        String dob     = etRegDob.getText().toString().trim();
         String address = etRegAddress.getText().toString().trim();
-        
-        String gName = etGuarantorName.getText().toString().trim();
-        String gPhone = etGuarantorPhone.getText().toString().trim();
+
+        String gName     = etGuarantorName.getText().toString().trim();
+        String gPhone    = etGuarantorPhone.getText().toString().trim();
         String gRelation = etGuarantorRelation.getText().toString().trim();
 
-        // 1. Emptiness Checks
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty() ||
-            cnic.isEmpty() || phone.isEmpty() || city.isEmpty() || 
-            dob.isEmpty() || address.isEmpty() || gName.isEmpty() || 
-            gPhone.isEmpty() || gRelation.isEmpty()) {
-            Toast.makeText(this, "Please fill all fields natively.", Toast.LENGTH_SHORT).show();
+        // 1. Emptiness checks
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()
+                || cnic.isEmpty() || phone.isEmpty() || city.isEmpty()
+                || dob.isEmpty() || address.isEmpty() || gName.isEmpty()
+                || gPhone.isEmpty() || gRelation.isEmpty()) {
+            Toast.makeText(this, "Please fill all fields.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // 2. Strict Format Validations
+        // 2. Strict format validations
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(this, "Invalid Email Format.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Invalid email format.", Toast.LENGTH_SHORT).show();
             return;
         }
         if (password.length() < 6) {
@@ -102,74 +160,79 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
         if (!Pattern.matches(CNIC_PATTERN, cnic)) {
-            Toast.makeText(this, "CNIC must follow 12345-1234567-1 format", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "CNIC must follow 12345-1234567-1 format.", Toast.LENGTH_LONG).show();
             return;
         }
-        if (!Pattern.matches(PHONE_PATTERN, phone)) {
-            Toast.makeText(this, "Phone must be 11 digits starting with 03", Toast.LENGTH_LONG).show();
+
+        // Strip display dashes for phone validation (formatter adds dash after position 4)
+        String rawPhone  = phone.replaceAll("\\D", "");
+        String rawGPhone = gPhone.replaceAll("\\D", "");
+
+        if (!Pattern.matches(PHONE_PATTERN, rawPhone)) {
+            Toast.makeText(this, "Phone must be 11 digits starting with 03.", Toast.LENGTH_LONG).show();
             return;
         }
-        if (!Pattern.matches(PHONE_PATTERN, gPhone)) {
-            Toast.makeText(this, "Guarantor Phone must be 11 digits starting with 03", Toast.LENGTH_LONG).show();
+        if (!Pattern.matches(PHONE_PATTERN, rawGPhone)) {
+            Toast.makeText(this, "Guarantor phone must be 11 digits starting with 03.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // DOB strict validation
+        String dobError = InputFormatters.validateDob(dob);
+        if (dobError != null) {
+            Toast.makeText(this, dobError, Toast.LENGTH_LONG).show();
             return;
         }
 
         btnRegister.setEnabled(false);
 
-        // 3. Uniqueness Check: Sequential querying to ensure older SDK stability
-        // First check phone...
-        db.collection("users").whereEqualTo("phone", phone).get().addOnCompleteListener(task1 -> {
-            if (task1.isSuccessful() && !task1.getResult().isEmpty()) {
-                btnRegister.setEnabled(true);
-                Toast.makeText(this, "Account with this Phone already exists!", Toast.LENGTH_LONG).show();
-            } else {
-                // Phone is unique. Now check CNIC...
-                db.collection("users").whereEqualTo("cnic", cnic).get().addOnCompleteListener(task2 -> {
-                     if (task2.isSuccessful() && !task2.getResult().isEmpty()) {
-                         btnRegister.setEnabled(true);
-                         Toast.makeText(this, "Account with this CNIC already exists!", Toast.LENGTH_LONG).show();
-                     } else {
-                         // Both are entirely unique. Proceed with account block creation.
-                         createUserAccount(
-                             name, email, password, cnic, phone, city, dob, address, 
-                             gName, gPhone, gRelation
-                         );
-                     }
+        // 3. Uniqueness check: phone first, then CNIC
+        db.collection("users").whereEqualTo("phone", rawPhone).get()
+                .addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful() && !task1.getResult().isEmpty()) {
+                        btnRegister.setEnabled(true);
+                        Toast.makeText(this, "An account with this phone already exists!", Toast.LENGTH_LONG).show();
+                    } else {
+                        db.collection("users").whereEqualTo("cnic", cnic).get()
+                                .addOnCompleteListener(task2 -> {
+                                    if (task2.isSuccessful() && !task2.getResult().isEmpty()) {
+                                        btnRegister.setEnabled(true);
+                                        Toast.makeText(this, "An account with this CNIC already exists!", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        createUserAccount(name, email, password, cnic, rawPhone, city, dob, address,
+                                                gName, rawGPhone, gRelation);
+                                    }
+                                });
+                    }
                 });
-            }
-        });
     }
 
-    private void createUserAccount(String name, String email, String password, 
-                                   String cnic, String phone, String city, String dob, String address, 
+    private void createUserAccount(String name, String email, String password,
+                                   String cnic, String phone, String city, String dob, String address,
                                    String gName, String gPhone, String gRelation) {
-        
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null) {
-                            saveUserToFirestore(
-                                user.getUid(), name, email, cnic, phone, city, dob, address,
-                                gName, gPhone, gRelation
-                            );
+                            saveUserToFirestore(user.getUid(), name, email, cnic, phone, city, dob, address,
+                                    gName, gPhone, gRelation);
                         }
                     } else {
                         btnRegister.setEnabled(true);
-                        Toast.makeText(RegisterActivity.this, "Registration Auth Failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Registration failed: " + task.getException().getMessage(),
+                                Toast.LENGTH_LONG).show();
                     }
                 });
     }
 
-    private void saveUserToFirestore(String uid, String name, String email, 
-                                     String cnic, String phone, String city, String dob, String address, 
+    private void saveUserToFirestore(String uid, String name, String email,
+                                     String cnic, String phone, String city, String dob, String address,
                                      String gName, String gPhone, String gRelation) {
-        
         Map<String, Object> userData = new HashMap<>();
         userData.put("userId", uid);
         userData.put("name", name);
         userData.put("email", email);
-        
         userData.put("cnic", cnic);
         userData.put("phone", phone);
         userData.put("city", city);
@@ -180,22 +243,19 @@ public class RegisterActivity extends AppCompatActivity {
         guarantor.put("name", gName);
         guarantor.put("phone", gPhone);
         guarantor.put("relation", gRelation);
-        
-        // Nest Guarantor metadata safely
         userData.put("guarantor", guarantor);
 
         db.collection("users").document(uid).set(userData)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(RegisterActivity.this, "Secure Account Created Successfully", Toast.LENGTH_SHORT).show();
-                    
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    Toast.makeText(this, "Account created successfully!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
                 })
                 .addOnFailureListener(e -> {
                     btnRegister.setEnabled(true);
-                    Toast.makeText(RegisterActivity.this, "Failed to save secure user data.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Failed to save user data.", Toast.LENGTH_LONG).show();
                 });
     }
 }

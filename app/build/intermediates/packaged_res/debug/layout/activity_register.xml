@@ -1,27 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface">
+    android:background="@drawable/bg_screen_gradient">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="24dp"
-        android:gravity="center_horizontal">
+        android:padding="24dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.card.MaterialCardView
+            style="@style/QarzCard"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create Account"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorPrimary"
-            android:layout_marginBottom="32dp"/>
+            android:layout_marginBottom="18dp">
 
-        <!-- Basic Info -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Create Account"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Build a trusted profile with your contact and guarantor details."
+                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/QarzTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp">
@@ -34,6 +56,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/QarzTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp">
@@ -46,6 +69,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/QarzTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp">
@@ -57,8 +81,8 @@
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- KYC Details -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/QarzTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp">
@@ -66,11 +90,12 @@
                 android:id="@+id/etRegCnic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="CNIC Number (12345-1234567-1)"
+                android:hint="CNIC (12345-1234567-1)"
                 android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/QarzTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp">
@@ -78,22 +103,23 @@
                 android:id="@+id/etRegPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Phone Number (03XXXXXXXXX)"
+                android:hint="Phone Number (03XX-XXXXXXX)"
                 android:inputType="phone"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginBottom="16dp">
+            android:weightSum="2">
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/QarzTextInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp">
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegCity"
                     android:layout_width="match_parent"
@@ -103,23 +129,25 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/QarzTextInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp">
+                android:layout_marginStart="8dp"
+                android:layout_weight="1">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegDob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="DOB (DD/MM/YYYY)"
-                    android:inputType="date"/>
+                    android:inputType="number"/>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/QarzTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp">
+            android:layout_marginBottom="24dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etRegAddress"
                 android:layout_width="match_parent"
@@ -128,76 +156,92 @@
                 android:inputType="textPostalAddress"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Guarantor Dividers -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#DDDDDD"
-            android:layout_marginBottom="16dp"/>
-
-        <TextView
+        <com.google.android.material.card.MaterialCardView
+            style="@style/QarzCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Trusted Guarantor (In case of default/emergency)"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorPrimaryDark"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="24dp">
 
-        <!-- Guarantor Details -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etGuarantorName"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Guarantor Name"
-                android:inputType="textPersonName"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical"
+                android:padding="18dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etGuarantorPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Guarantor Phone"
-                android:inputType="phone"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Trusted Guarantor"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etGuarantorRelation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Relation to User (e.g. Brother, Friend)"
-                android:inputType="text"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="Used only for trust verification and emergency contact in case of default."
+                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    android:textSize="13sp" />
 
-        <!-- Core Actions -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/QarzTextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etGuarantorName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Guarantor Name"
+                        android:inputType="textPersonName"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/QarzTextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etGuarantorPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Guarantor Phone (03XX-XXXXXXX)"
+                        android:inputType="phone"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/QarzTextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etGuarantorRelation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Relation to User (e.g. Brother, Friend)"
+                        android:inputType="text"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <Button
             android:id="@+id/btnRegister"
+            style="@style/QarzButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
             android:text="Register"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp"/>
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/tvGoToLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             android:text="Already have an account? Login here."
-            android:textSize="14sp"
             android:textColor="?attr/colorPrimary"
-            android:padding="8dp"/>
+            android:textSize="14sp"/>
 
     </LinearLayout>
 </ScrollView>

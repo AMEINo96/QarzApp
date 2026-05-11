@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.qarz.app-mergeDebugResources-35:/values-ja/values-ja.xml",
+            "outputFile": "com.qarz.app-mergeDebugResources-42:/values-ja/values-ja.xml",
             "map": [
                 {
                     "source": "C:\\Users\\muham\\.gradle\\caches\\transforms-3\\113ab17eddfe7f80ec2f0664d65e3bc6\\transformed\\appcompat-1.6.1\\res\\values-ja\\values-ja.xml",
@@ -35,6 +35,23 @@
                         "startOffsets": "10169",
                         "endColumns": "100",
                         "endOffsets": "10265"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\muham\\.gradle\\caches\\transforms-3\\9f19abb94148b4550f4cd71e1cb10430\\transformed\\jetified-play-services-basement-18.2.0\\res\\values-ja\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "117",
+                        "endOffsets": "312"
+                    },
+                    "to": {
+                        "startLines": "49",
+                        "startColumns": "4",
+                        "startOffsets": "4437",
+                        "endColumns": "121",
+                        "endOffsets": "4554"
                     }
                 },
                 {
@@ -88,23 +105,6 @@
                         "startOffsets": "3517,3621,3755,3875,3981,4113,4233,4338,4559,4693,4794,4927,5046,5166,5286,5346,5405",
                         "endColumns": "103,133,119,105,131,119,104,98,133,100,132,118,119,119,59,58,70",
                         "endOffsets": "3616,3750,3870,3976,4108,4228,4333,4432,4688,4789,4922,5041,5161,5281,5341,5400,5471"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\muham\\.gradle\\caches\\transforms-3\\8abb370aae7ee6dcf07aaf1fe2fcbf3c\\transformed\\jetified-play-services-basement-18.1.0\\res\\values-ja\\values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "117",
-                        "endOffsets": "312"
-                    },
-                    "to": {
-                        "startLines": "49",
-                        "startColumns": "4",
-                        "startOffsets": "4437",
-                        "endColumns": "121",
-                        "endOffsets": "4554"
                     }
                 }
             ]

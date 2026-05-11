@@ -1,26 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="md_theme_background">#FBFDF9</color>
+    <color name="md_theme_background">#F4F7F5</color>
+    <color name="md_theme_danger">#C55454</color>
+    <color name="md_theme_danger_soft">#FBE7E7</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_onSurface">#15201B</color>
+    <color name="md_theme_onSurfaceVariant">#5A6A62</color>
+    <color name="md_theme_outline">#CBD6D0</color>
     <color name="md_theme_primary">#006C4C</color>
+    <color name="md_theme_primaryContainer">#D8F4E8</color>
+    <color name="md_theme_primary_dark">#004D36</color>
     <color name="md_theme_secondary">#4D6357</color>
-    <color name="md_theme_surface">#FBFDF9</color>
+    <color name="md_theme_secondaryContainer">#E5EFE9</color>
+    <color name="md_theme_success">#1F8A4C</color>
+    <color name="md_theme_success_soft">#E3F5EA</color>
+    <color name="md_theme_surface">#FFFFFF</color>
+    <color name="md_theme_surfaceVariant">#EEF3F0</color>
+    <color name="warning_primary">#B3261E</color>
+    <color name="warning_soft">#FDECEA</color>
     <string name="app_name">QarzApp</string>
+    <string name="default_web_client_id" translatable="false">147237835348-80tnjjl94c2dmoevetlgmb22vm04u4h2.apps.googleusercontent.com</string>
     <string name="gcm_defaultSenderId" translatable="false">147237835348</string>
     <string name="google_api_key" translatable="false">AIzaSyADZ3Z8-u6jUwJ3_2tEEQmj3uiS1Y7vQnY</string>
     <string name="google_app_id" translatable="false">1:147237835348:android:99025a1a991f14835f13c1</string>
     <string name="google_crash_reporting_api_key" translatable="false">AIzaSyADZ3Z8-u6jUwJ3_2tEEQmj3uiS1Y7vQnY</string>
     <string name="google_storage_bucket" translatable="false">qarzapp-2357f.firebasestorage.app</string>
     <string name="project_id" translatable="false">qarzapp-2357f</string>
-    <style name="Base.Theme.QarzApp" parent="Theme.Material3.DayNight.NoActionBar">
-        
+    <style name="Base.Theme.QarzApp" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
         <item name="colorSecondary">@color/md_theme_secondary</item>
         <item name="colorOnSecondary">@color/md_theme_onSecondary</item>
+        <item name="colorSurface">@color/md_theme_surface</item>
+        <item name="android:colorBackground">@color/md_theme_background</item>
+        <item name="colorOnSurface">@color/md_theme_onSurface</item>
         <item name="android:windowBackground">@color/md_theme_background</item>
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:statusBarColor">@color/md_theme_background</item>
+        <item name="android:navigationBarColor">@color/md_theme_surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+    <style name="QarzButton" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">18dp</item>
+        <item name="android:minHeight">54dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="backgroundTint">@color/md_theme_primary</item>
+        <item name="android:textColor">@color/md_theme_onPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="QarzButtonSecondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">18dp</item>
+        <item name="android:minHeight">52dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="strokeColor">@color/md_theme_outline</item>
+        <item name="android:textColor">@color/md_theme_primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="QarzCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">20dp</item>
+        <item name="strokeColor">@color/md_theme_outline</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardBackgroundColor">@color/md_theme_surface</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+    <style name="QarzEmptyMessage">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/md_theme_onSurfaceVariant</item>
+    </style>
+    <style name="QarzEmptyTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/md_theme_onSurface</item>
+    </style>
+    <style name="QarzTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/md_theme_surface</item>
+        <item name="boxStrokeColor">@color/md_theme_outline</item>
+        <item name="hintTextColor">@color/md_theme_onSurfaceVariant</item>
+        <item name="android:textColorHint">@color/md_theme_onSurfaceVariant</item>
+        <item name="boxCornerRadiusTopStart">18dp</item>
+        <item name="boxCornerRadiusTopEnd">18dp</item>
+        <item name="boxCornerRadiusBottomStart">18dp</item>
+        <item name="boxCornerRadiusBottomEnd">18dp</item>
     </style>
     <style name="Theme.QarzApp" parent="Base.Theme.QarzApp"/>
 </resources>

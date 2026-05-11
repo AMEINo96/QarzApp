@@ -26,6 +26,7 @@ public class FriendsListFragment extends Fragment {
 
     private LinearLayout llFriendsContainer;
     private ProgressBar progressBar;
+    private TextView tvEmptyFriends;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private String currentUserId;
@@ -37,6 +38,7 @@ public class FriendsListFragment extends Fragment {
 
         llFriendsContainer = view.findViewById(R.id.llFriendsContainer);
         progressBar = view.findViewById(R.id.progressBar);
+        tvEmptyFriends = view.findViewById(R.id.tvEmptyFriends);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -65,19 +67,22 @@ public class FriendsListFragment extends Fragment {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     progressBar.setVisibility(View.GONE);
+                    boolean hasFriends = false;
                     if (documentSnapshot.exists() && documentSnapshot.getData() != null) {
                         Map<String, Object> connections = documentSnapshot.getData();
                         for (Map.Entry<String, Object> entry : connections.entrySet()) {
                             Object status = entry.getValue();
-                            // Support legacy boolean true or the new string "true"
                             if (("true".equals(status)) || (status instanceof Boolean && (Boolean) status)) {
+                                hasFriends = true;
                                 loadFriendProfile(entry.getKey());
                             }
                         }
                     }
+                    tvEmptyFriends.setVisibility(hasFriends ? View.GONE : View.VISIBLE);
                 })
                 .addOnFailureListener(e -> {
                     progressBar.setVisibility(View.GONE);
+                    tvEmptyFriends.setVisibility(View.VISIBLE);
                     if (getContext() != null) {
                         Toast.makeText(getContext(), "Failed to load friends.", Toast.LENGTH_SHORT).show();
                     }
@@ -111,6 +116,7 @@ public class FriendsListFragment extends Fragment {
                 startActivity(intent);
             });
 
+            tvEmptyFriends.setVisibility(View.GONE);
             llFriendsContainer.addView(itemFriend);
         });
     }

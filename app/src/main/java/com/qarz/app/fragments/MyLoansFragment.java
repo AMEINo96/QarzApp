@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +30,7 @@ public class MyLoansFragment extends Fragment {
 
     private ProgressBar progressBar;
     private RecyclerView rvMyLoans;
+    private TextView tvEmptyLoans;
     private TabLoanAdapter adapter;
     private List<DisplayLoan> loansList = new ArrayList<>();
 
@@ -43,6 +44,7 @@ public class MyLoansFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressBar);
         rvMyLoans = view.findViewById(R.id.rvMyLoans);
+        tvEmptyLoans = view.findViewById(R.id.tvEmptyLoans);
 
         rvMyLoans.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new TabLoanAdapter(loansList);
@@ -68,6 +70,7 @@ public class MyLoansFragment extends Fragment {
                     if (error != null) {
                         Log.w(TAG, "Listen failed.", error);
                         progressBar.setVisibility(View.GONE);
+                        updateEmptyState(true);
                         return;
                     }
                     
@@ -75,6 +78,7 @@ public class MyLoansFragment extends Fragment {
                         progressBar.setVisibility(View.GONE);
                         loansList.clear();
                         adapter.notifyDataSetChanged();
+                        updateEmptyState(true);
                         return;
                     }
 
@@ -101,6 +105,7 @@ public class MyLoansFragment extends Fragment {
                                 loansList.clear();
                                 loansList.addAll(tempLoans);
                                 adapter.notifyDataSetChanged();
+                                updateEmptyState(loansList.isEmpty());
                             }
                         }).addOnFailureListener(e -> {
                             completedCount[0]++;
@@ -109,9 +114,19 @@ public class MyLoansFragment extends Fragment {
                                 loansList.clear();
                                 loansList.addAll(tempLoans);
                                 adapter.notifyDataSetChanged();
+                                updateEmptyState(loansList.isEmpty());
                             }
                         });
                     }
                 });
+    }
+
+    private void updateEmptyState(boolean isEmpty) {
+        if (tvEmptyLoans != null) {
+            tvEmptyLoans.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+        }
+        if (rvMyLoans != null) {
+            rvMyLoans.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        }
     }
 }

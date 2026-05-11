@@ -26,6 +26,7 @@ public class NotificationsFragment extends Fragment {
 
     private LinearLayout llRequestsContainer;
     private ProgressBar progressBar;
+    private TextView tvEmptyNotifications;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private String currentUserId;
@@ -37,6 +38,7 @@ public class NotificationsFragment extends Fragment {
 
         llRequestsContainer = view.findViewById(R.id.llRequestsContainer);
         progressBar = view.findViewById(R.id.progressBar);
+        tvEmptyNotifications = view.findViewById(R.id.tvEmptyNotifications);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -52,6 +54,9 @@ public class NotificationsFragment extends Fragment {
 
     private void loadAllRequests() {
         llRequestsContainer.removeAllViews();
+        llRequestsContainer.addView(progressBar);
+        llRequestsContainer.addView(tvEmptyNotifications);
+        tvEmptyNotifications.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
 
         db.collection("connections").document(currentUserId)
@@ -96,12 +101,15 @@ public class NotificationsFragment extends Fragment {
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     progressBar.setVisibility(View.GONE);
+                    tvEmptyNotifications.setVisibility(llRequestsContainer.getChildCount() <= 2 ? View.VISIBLE : View.GONE);
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         loadSettlementAppealUI(doc);
                     }
+                    tvEmptyNotifications.setVisibility(llRequestsContainer.getChildCount() <= 2 ? View.VISIBLE : View.GONE);
                 })
                 .addOnFailureListener(e -> {
                     progressBar.setVisibility(View.GONE);
+                    tvEmptyNotifications.setVisibility(llRequestsContainer.getChildCount() <= 2 ? View.VISIBLE : View.GONE);
                     if (getContext() != null) {
                         Toast.makeText(getContext(), "Failed to load settlement appeals.", Toast.LENGTH_SHORT).show();
                     }
@@ -132,6 +140,7 @@ public class NotificationsFragment extends Fragment {
 
             llRequestsContainer.addView(txt);
             llRequestsContainer.addView(btnAccept);
+            tvEmptyNotifications.setVisibility(View.GONE);
         });
     }
 
@@ -194,6 +203,7 @@ public class NotificationsFragment extends Fragment {
             txt.setPadding(0, 16, 0, 16);
 
             llRequestsContainer.addView(txt);
+            tvEmptyNotifications.setVisibility(View.GONE);
 
             if ("pending".equals(status)) {
                 LinearLayout buttonsGroup = new LinearLayout(getContext());
@@ -236,6 +246,7 @@ public class NotificationsFragment extends Fragment {
                 buttonsGroup.addView(btnAccept);
                 buttonsGroup.addView(btnReject);
                 llRequestsContainer.addView(buttonsGroup);
+                tvEmptyNotifications.setVisibility(View.GONE);
 
             } else if ("active".equals(status)) {
                 TextView tvStatus = new TextView(getContext());
@@ -245,6 +256,7 @@ public class NotificationsFragment extends Fragment {
                 tvStatus.setTextSize(15);
                 tvStatus.setPadding(0, 0, 0, 16);
                 llRequestsContainer.addView(tvStatus);
+                tvEmptyNotifications.setVisibility(View.GONE);
 
             } else if ("rejected".equals(status)) {
                 TextView tvStatus = new TextView(getContext());
@@ -254,6 +266,7 @@ public class NotificationsFragment extends Fragment {
                 tvStatus.setTextSize(15);
                 tvStatus.setPadding(0, 0, 0, 16);
                 llRequestsContainer.addView(tvStatus);
+                tvEmptyNotifications.setVisibility(View.GONE);
 
             } else if ("settled".equals(status)) {
                 TextView tvStatus = new TextView(getContext());
@@ -263,6 +276,7 @@ public class NotificationsFragment extends Fragment {
                 tvStatus.setTextSize(15);
                 tvStatus.setPadding(0, 0, 0, 16);
                 llRequestsContainer.addView(tvStatus);
+                tvEmptyNotifications.setVisibility(View.GONE);
             }
         });
     }
@@ -338,6 +352,7 @@ public class NotificationsFragment extends Fragment {
 
             llRequestsContainer.addView(txt);
             llRequestsContainer.addView(buttonsGroup);
+            tvEmptyNotifications.setVisibility(View.GONE);
         });
     }
 }

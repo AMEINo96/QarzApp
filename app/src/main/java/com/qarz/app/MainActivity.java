@@ -11,12 +11,25 @@ import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.qarz.app.activities.CompleteProfileActivity;
 import com.qarz.app.activities.LoginActivity;
 import com.qarz.app.fragments.DashboardFragment;
 import com.qarz.app.fragments.FriendsListFragment;
 import com.qarz.app.fragments.MyDebtsFragment;
 import com.qarz.app.fragments.MyLoansFragment;
 import com.qarz.app.fragments.NotificationsFragment;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.content.ContextCompat;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import java.util.concurrent.TimeUnit;
+import com.qarz.app.utils.OverdueReminderWorker;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private int pendingBorrowerRequests = 0;
     private int pendingSettlementAppeals = 0;
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    scheduleOverdueReminders();
+                } else {
+                    Log.w("MainActivity", "Notification permission denied. Overdue reminders won't show.");
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +62,33 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        // Ensure the signed-in user has a complete Firestore profile (CNIC present).
+        // Guards against Google-signed users who haven't filled in their details.
+        db.collection("users").document(mAuth.getCurrentUser().getUid()).get()
+                .addOnSuccessListener(doc -> {
+                    if (!doc.exists() || doc.getString("cnic") == null) {
+                        startActivity(new Intent(this, CompleteProfileActivity.class));
+                        finish();
+                    } else {
+                        initMainScreen();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Firestore read failed (likely rules issue or network).
+                    Log.e("MainActivity", "Profile check failed: " + e.getMessage());
+                    // We MUST NOT let them into the main screen if we can't verify their profile,
+                    // otherwise they end up with empty details.
+                    // Force them to CompleteProfileActivity.
+                    startActivity(new Intent(this, CompleteProfileActivity.class));
+                    finish();
+                });
+    }
+
+    /** Sets up bottom navigation and badge listeners. Called after profile check passes. */
+    private void initMainScreen() {
         bottomNav = findViewById(R.id.bottom_navigation);
+
+        checkNotificationPermissionAndSchedule();
 
         bottomNav.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
@@ -67,9 +115,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Load the default fragment on startup
-        if (savedInstanceState == null) {
-            bottomNav.setSelectedItemId(R.id.navigation_dashboard);
-        }
+        bottomNav.setSelectedItemId(R.id.navigation_dashboard);
 
         // Initialize Live Badge Counter
         listenForNotificationBadges();
@@ -87,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.w("MainActivity", "Listen failed.", error);
                         return;
                     }
-
                     pendingBorrowerRequests = value != null ? value.size() : 0;
                     updateNotificationBadge();
                 });
@@ -101,13 +146,13 @@ public class MainActivity extends AppCompatActivity {
                         Log.w("MainActivity", "Settlement appeal listener failed.", error);
                         return;
                     }
-
                     pendingSettlementAppeals = value != null ? value.size() : 0;
                     updateNotificationBadge();
                 });
     }
 
     private void updateNotificationBadge() {
+        if (bottomNav == null) return;
         int count = pendingBorrowerRequests + pendingSettlementAppeals;
         BadgeDrawable badge = bottomNav.getOrCreateBadge(R.id.navigation_notifications);
         if (count > 0) {
@@ -118,5 +163,29 @@ public class MainActivity extends AppCompatActivity {
             badge.setVisible(false);
             badge.clearNumber();
         }
+    }
+
+    private void checkNotificationPermissionAndSchedule() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                scheduleOverdueReminders();
+            } else {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            }
+        } else {
+            scheduleOverdueReminders();
+        }
+    }
+
+    private void scheduleOverdueReminders() {
+        // Run daily to check for overdue loans
+        PeriodicWorkRequest reminderRequest = new PeriodicWorkRequest.Builder(
+                OverdueReminderWorker.class, 24, TimeUnit.HOURS)
+                .build();
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                "OverdueReminderWork",
+                ExistingPeriodicWorkPolicy.KEEP,
+                reminderRequest);
     }
 }

@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">QarzApp</string>
+    <!--
+        IMPORTANT: Replace this with your actual Web OAuth 2.0 client ID.
+        Steps:
+        1. Go to Firebase Console → your project → Authentication → Sign-in method → Google → Enable
+        2. Go to Google Cloud Console → APIs & Services → Credentials
+        3. Find the "Web client (auto created by Google Service)" OAuth 2.0 Client ID
+        4. Copy the client ID and paste it below (it ends with .apps.googleusercontent.com)
+    -->
+    <string name="default_web_client_id">147237835348-80tnjjl94c2dmoevetlgmb22vm04u4h2.apps.googleusercontent.com</string>
 </resources>

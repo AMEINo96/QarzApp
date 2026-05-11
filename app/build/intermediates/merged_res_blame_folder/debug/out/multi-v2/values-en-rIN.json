@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.qarz.app-mergeDebugResources-35:/values-en-rIN/values-en-rIN.xml",
+            "outputFile": "com.qarz.app-mergeDebugResources-42:/values-en-rIN/values-en-rIN.xml",
             "map": [
                 {
                     "source": "C:\\Users\\muham\\.gradle\\caches\\transforms-3\\e707afbc7aefab6307f6350855519a70\\transformed\\browser-1.4.0\\res\\values-en-rIN\\values-en-rIN.xml",

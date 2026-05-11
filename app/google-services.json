@@ -12,7 +12,20 @@
           "package_name": "com.qarz.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "147237835348-gjt5rhf28fgl9cntdskiv3j3l7hfj56s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qarz.app",
+            "certificate_hash": "1f0782440911814414e409f6365a22195b6c5b56"
+          }
+        },
+        {
+          "client_id": "147237835348-80tnjjl94c2dmoevetlgmb22vm04u4h2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyADZ3Z8-u6jUwJ3_2tEEQmj3uiS1Y7vQnY"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "147237835348-80tnjjl94c2dmoevetlgmb22vm04u4h2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -4,16 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp"
-    app:strokeWidth="0dp">
+    style="@style/QarzCard"
+    android:layout_marginBottom="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="18dp">
 
         <TextView
             android:id="@+id/tvFriendName"
@@ -22,7 +20,7 @@
             android:text="Friend Name"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="#000000" />
+            android:textColor="@color/md_theme_onSurface" />
             
         <TextView
             android:id="@+id/tvFriendEmail"
@@ -30,16 +28,16 @@
             android:layout_height="wrap_content"
             android:text="email@example.com"
             android:textSize="14sp"
-            android:textColor="#666666"
+            android:textColor="@color/md_theme_onSurfaceVariant"
             android:layout_marginTop="2dp" />
 
         <Button
             android:id="@+id/btnCheckDealings"
+            style="@style/QarzButtonSecondary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Check Dealings"
-            android:layout_marginTop="12dp"
-            app:backgroundTint="?attr/colorPrimary" />
+            android:layout_marginTop="14dp" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

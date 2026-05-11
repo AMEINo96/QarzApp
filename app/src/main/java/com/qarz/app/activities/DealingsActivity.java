@@ -28,6 +28,7 @@ public class DealingsActivity extends AppCompatActivity {
     private static final String TAG = "DealingsActivity";
 
     private TextView tvDealingsTitle, tvIOweThem, tvTheyOweMe;
+    private TextView tvEmptyActiveDealings, tvEmptyPastDealings;
     private LinearLayout layout_active_loans, layout_past_loans;
     private ImageButton btnBack;
 
@@ -47,6 +48,8 @@ public class DealingsActivity extends AppCompatActivity {
         tvDealingsTitle = findViewById(R.id.tvDealingsTitle);
         tvIOweThem = findViewById(R.id.tvIOweThem);
         tvTheyOweMe = findViewById(R.id.tvTheyOweMe);
+        tvEmptyActiveDealings = findViewById(R.id.tvEmptyActiveDealings);
+        tvEmptyPastDealings = findViewById(R.id.tvEmptyPastDealings);
         layout_active_loans = findViewById(R.id.layout_active_loans);
         layout_past_loans = findViewById(R.id.layout_past_loans);
         btnBack = findViewById(R.id.btnBack);
@@ -148,6 +151,8 @@ public class DealingsActivity extends AppCompatActivity {
 
         tvTheyOweMe.setText(String.format("Rs. %.2f", totalTheyOweMe));
         tvIOweThem.setText(String.format("Rs. %.2f", totalIOweThem));
+        tvEmptyActiveDealings.setVisibility(layout_active_loans.getChildCount() == 0 ? View.VISIBLE : View.GONE);
+        tvEmptyPastDealings.setVisibility(layout_past_loans.getChildCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     private void addLoanToUI(QueryDocumentSnapshot doc, boolean iAmLender, String status) {

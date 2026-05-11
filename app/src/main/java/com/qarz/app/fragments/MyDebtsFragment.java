@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ public class MyDebtsFragment extends Fragment {
 
     private ProgressBar progressBar;
     private RecyclerView rvMyDebts;
+    private TextView tvEmptyDebts;
     private TabLoanAdapter adapter;
     private List<DisplayLoan> debtsList = new ArrayList<>();
 
@@ -42,6 +44,7 @@ public class MyDebtsFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressBar);
         rvMyDebts = view.findViewById(R.id.rvMyDebts);
+        tvEmptyDebts = view.findViewById(R.id.tvEmptyDebts);
 
         rvMyDebts.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new TabLoanAdapter(debtsList);
@@ -67,6 +70,7 @@ public class MyDebtsFragment extends Fragment {
                     if (error != null) {
                         Log.w(TAG, "Listen failed.", error);
                         progressBar.setVisibility(View.GONE);
+                        updateEmptyState(true);
                         return;
                     }
                     
@@ -74,6 +78,7 @@ public class MyDebtsFragment extends Fragment {
                         progressBar.setVisibility(View.GONE);
                         debtsList.clear();
                         adapter.notifyDataSetChanged();
+                        updateEmptyState(true);
                         return;
                     }
 
@@ -100,6 +105,7 @@ public class MyDebtsFragment extends Fragment {
                                 debtsList.clear();
                                 debtsList.addAll(tempDebts);
                                 adapter.notifyDataSetChanged();
+                                updateEmptyState(debtsList.isEmpty());
                             }
                         }).addOnFailureListener(e -> {
                             completedCount[0]++;
@@ -108,9 +114,19 @@ public class MyDebtsFragment extends Fragment {
                                 debtsList.clear();
                                 debtsList.addAll(tempDebts);
                                 adapter.notifyDataSetChanged();
+                                updateEmptyState(debtsList.isEmpty());
                             }
                         });
                     }
                 });
+    }
+
+    private void updateEmptyState(boolean isEmpty) {
+        if (tvEmptyDebts != null) {
+            tvEmptyDebts.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+        }
+        if (rvMyDebts != null) {
+            rvMyDebts.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        }
     }
 }

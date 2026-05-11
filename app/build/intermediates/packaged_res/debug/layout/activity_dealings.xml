@@ -3,107 +3,118 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_screen_gradient"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="?attr/colorSurface">
+    android:padding="16dp">
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/QarzCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="18dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_surface_panel"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_menu_revert"
+                app:tint="@color/md_theme_primary" />
+
+            <TextView
+                android:id="@+id/tvDealingsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:text="Dealings"
+                android:textColor="@color/md_theme_onSurface"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="16dp">
-
-        <ImageButton
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackgroundBorderless"
-            android:src="@android:drawable/ic_menu_revert"
-            android:padding="8dp"/>
-
-        <TextView
-            android:id="@+id/tvDealingsTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dealings"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginStart="16dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_marginBottom="24dp">
+        android:weightSum="2">
 
         <com.google.android.material.card.MaterialCardView
+            style="@style/QarzCard"
             android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_weight="1"
+            android:layout_height="112dp"
             android:layout_marginEnd="8dp"
-            app:cardBackgroundColor="#C62828"
-            app:cardCornerRadius="12dp"
-            app:strokeWidth="0dp">
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/md_theme_danger_soft">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="I Owe"
-                    android:textColor="#FFCDD2"
-                    android:textSize="14sp" />
+                    android:textColor="@color/md_theme_danger"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvIOweThem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$0.00"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    android:text="Rs. 0.00"
+                    android:textColor="@color/md_theme_onSurface"
                     android:textSize="24sp"
-                    android:layout_marginTop="8dp"/>
+                    android:textStyle="bold" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            style="@style/QarzCard"
             android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_weight="1"
+            android:layout_height="112dp"
             android:layout_marginStart="8dp"
-            app:cardBackgroundColor="#2E7D32"
-            app:cardCornerRadius="12dp"
-            app:strokeWidth="0dp">
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/md_theme_success_soft">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="They Owe"
-                    android:textColor="#C8E6C9"
-                    android:textSize="14sp" />
+                    android:textColor="@color/md_theme_success"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvTheyOweMe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$0.00"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    android:text="Rs. 0.00"
+                    android:textColor="@color/md_theme_onSurface"
                     android:textSize="24sp"
-                    android:layout_marginTop="8dp"/>
+                    android:textStyle="bold" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
@@ -112,7 +123,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-        
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -121,33 +132,56 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Active Dealings"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 android:layout_marginBottom="12dp"
-                android:textColor="?attr/colorPrimary"/>
+                android:text="Active Dealings"
+                android:textColor="@color/md_theme_onSurface"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/layout_active_loans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="6dp"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/tvEmptyActiveDealings"
+                style="@style/QarzEmptyMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="24dp"
+                android:paddingTop="8dp"
+                android:text="No active dealings with this friend right now."
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Past Dealings"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 android:layout_marginBottom="12dp"
-                android:textColor="?attr/colorPrimary"/>
+                android:text="Past Dealings"
+                android:textColor="@color/md_theme_onSurface"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/layout_past_loans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"/>
+                android:layout_marginBottom="6dp"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/tvEmptyPastDealings"
+                style="@style/QarzEmptyMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="18dp"
+                android:paddingTop="8dp"
+                android:text="No past dealings found yet."
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 
