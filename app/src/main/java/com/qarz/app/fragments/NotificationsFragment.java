@@ -80,8 +80,16 @@ public class NotificationsFragment extends Fragment {
                 .whereEqualTo("borrowerId", currentUserId)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                        loadLoanRequestUI(doc);
+                    java.util.List<com.google.firebase.firestore.DocumentSnapshot> docs = new java.util.ArrayList<>(queryDocumentSnapshots.getDocuments());
+                    java.util.Collections.sort(docs, (d1, d2) -> {
+                        Long t1 = d1.getLong("createdAt");
+                        Long t2 = d2.getLong("createdAt");
+                        if (t1 == null) t1 = 0L;
+                        if (t2 == null) t2 = 0L;
+                        return t2.compareTo(t1);
+                    });
+                    for (com.google.firebase.firestore.DocumentSnapshot doc : docs) {
+                        loadLoanRequestUI((QueryDocumentSnapshot) doc);
                     }
                     loadSettlementAppealsForLender();
                 })
@@ -102,8 +110,16 @@ public class NotificationsFragment extends Fragment {
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     progressBar.setVisibility(View.GONE);
                     tvEmptyNotifications.setVisibility(llRequestsContainer.getChildCount() <= 2 ? View.VISIBLE : View.GONE);
-                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                        loadSettlementAppealUI(doc);
+                    java.util.List<com.google.firebase.firestore.DocumentSnapshot> docs = new java.util.ArrayList<>(queryDocumentSnapshots.getDocuments());
+                    java.util.Collections.sort(docs, (d1, d2) -> {
+                        Long t1 = d1.getLong("createdAt");
+                        Long t2 = d2.getLong("createdAt");
+                        if (t1 == null) t1 = 0L;
+                        if (t2 == null) t2 = 0L;
+                        return t2.compareTo(t1);
+                    });
+                    for (com.google.firebase.firestore.DocumentSnapshot doc : docs) {
+                        loadSettlementAppealUI((QueryDocumentSnapshot) doc);
                     }
                     tvEmptyNotifications.setVisibility(llRequestsContainer.getChildCount() <= 2 ? View.VISIBLE : View.GONE);
                 })
@@ -117,47 +133,84 @@ public class NotificationsFragment extends Fragment {
     }
 
     private void loadFriendRequestUI(String friendId) {
+        if (getContext() == null) return;
+        View cardView = getLayoutInflater().inflate(R.layout.item_notification, llRequestsContainer, false);
+        llRequestsContainer.addView(cardView);
+
         db.collection("users").document(friendId).get().addOnSuccessListener(userDoc -> {
-            if (getContext() == null) {
-                return;
-            }
             String name = userDoc.getString("name");
             if (name == null) {
                 name = "Unknown User";
             }
 
+            LinearLayout llContent = cardView.findViewById(R.id.llNotificationContent);
+
             TextView txt = new TextView(getContext());
-            txt.setText("\nFriend Request from: " + name);
+            txt.setText("Friend Request from: " + name);
             txt.setTextSize(16);
-            txt.setPadding(0, 16, 0, 16);
+            txt.setPadding(0, 0, 0, 16);
 
-            Button btnAccept = new Button(getContext());
-            btnAccept.setText("Accept Friend");
-            btnAccept.setBackgroundColor(Color.parseColor("#2E7D32"));
+            LinearLayout buttonsGroup = new LinearLayout(getContext());
+            buttonsGroup.setOrientation(LinearLayout.HORIZONTAL);
+
+            com.google.android.material.button.MaterialButton btnAccept = new com.google.android.material.button.MaterialButton(getContext());
+            btnAccept.setText("Accept");
+            btnAccept.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#2E7D32")));
             btnAccept.setTextColor(Color.WHITE);
+            btnAccept.setCornerRadius(50);
 
-            btnAccept.setOnClickListener(v -> acceptFriendRequest(friendId, txt, btnAccept));
+            com.google.android.material.button.MaterialButton btnReject = new com.google.android.material.button.MaterialButton(getContext());
+            btnReject.setText("Reject");
+            btnReject.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#C62828")));
+            btnReject.setTextColor(Color.WHITE);
+            btnReject.setCornerRadius(50);
 
-            llRequestsContainer.addView(txt);
-            llRequestsContainer.addView(btnAccept);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(0, 0, 16, 0);
+            btnAccept.setLayoutParams(params);
+
+            btnAccept.setOnClickListener(v -> acceptFriendRequest(friendId, cardView));
+            btnReject.setOnClickListener(v -> rejectFriendRequest(friendId, cardView));
+
+            buttonsGroup.addView(btnAccept);
+            buttonsGroup.addView(btnReject);
+
+            llContent.addView(txt);
+            llContent.addView(buttonsGroup);
+
             tvEmptyNotifications.setVisibility(View.GONE);
         });
     }
 
-    private void acceptFriendRequest(String friendId, View textCard, Button btn) {
-        btn.setEnabled(false);
+    private void acceptFriendRequest(String friendId, View cardView) {
         db.collection("connections").document(currentUserId).update(friendId, "true")
                 .addOnSuccessListener(aVoid -> {
                     db.collection("connections").document(friendId).update(currentUserId, "true");
-                    llRequestsContainer.removeView(textCard);
-                    llRequestsContainer.removeView(btn);
+                    llRequestsContainer.removeView(cardView);
                     if (getContext() != null) {
                         Toast.makeText(getContext(), "Friend Accepted", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
+    private void rejectFriendRequest(String friendId, View cardView) {
+        db.collection("connections").document(currentUserId).update(friendId, com.google.firebase.firestore.FieldValue.delete())
+                .addOnSuccessListener(aVoid -> {
+                    llRequestsContainer.removeView(cardView);
+                    if (getContext() != null) {
+                        Toast.makeText(getContext(), "Friend Request Rejected", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     private void loadLoanRequestUI(QueryDocumentSnapshot loanDoc) {
+        if (getContext() == null) return;
+        View cardView = getLayoutInflater().inflate(R.layout.item_notification, llRequestsContainer, false);
+        llRequestsContainer.addView(cardView);
+
         String loanId = loanDoc.getId();
         String lenderId = loanDoc.getString("lenderId");
         Double amount = loanDoc.getDouble("amount");
@@ -169,18 +222,17 @@ public class NotificationsFragment extends Fragment {
         Boolean settlementRequested = loanDoc.getBoolean("settlementRequested");
 
         db.collection("users").document(lenderId).get().addOnSuccessListener(userDoc -> {
-            if (getContext() == null) {
-                return;
-            }
             String name = userDoc.getString("name");
             if (name == null) {
                 name = "Unknown";
             }
 
+            LinearLayout llContent = cardView.findViewById(R.id.llNotificationContent);
+
             StringBuilder details = new StringBuilder();
-            details.append("\nLoan (").append(status != null ? status.toUpperCase() : "PENDING").append(")\n")
+            details.append("Loan (").append(status != null ? status.toUpperCase() : "PENDING").append(")\n")
                     .append("From: ").append(name)
-                    .append("\nAmount: Rs. ").append(String.format(java.util.Locale.getDefault(), "%.2f", amount != null ? amount : 0.0))
+                    .append("\nAmount: Rs. ").append(String.format(java.util.Locale.getDefault(), "%,.0f", amount != null ? amount : 0.0))
                     .append("\nDesc: ").append(desc != null ? desc : "No description");
 
             if (Boolean.TRUE.equals(sharedLoan) && splitCount != null && splitCount > 1) {
@@ -189,7 +241,7 @@ public class NotificationsFragment extends Fragment {
                         .append(" friends");
                 if (originalTotal != null && originalTotal > 0) {
                     details.append(" from Rs. ")
-                            .append(String.format(java.util.Locale.getDefault(), "%.2f", originalTotal));
+                            .append(String.format(java.util.Locale.getDefault(), "%,.0f", originalTotal));
                 }
             }
 
@@ -200,32 +252,39 @@ public class NotificationsFragment extends Fragment {
             TextView txt = new TextView(getContext());
             txt.setText(details.toString());
             txt.setTextSize(16);
-            txt.setPadding(0, 16, 0, 16);
+            txt.setPadding(0, 0, 0, 16);
 
-            llRequestsContainer.addView(txt);
-            tvEmptyNotifications.setVisibility(View.GONE);
+            llContent.addView(txt);
 
             if ("pending".equals(status)) {
                 LinearLayout buttonsGroup = new LinearLayout(getContext());
                 buttonsGroup.setOrientation(LinearLayout.HORIZONTAL);
 
-                Button btnAccept = new Button(getContext());
+                com.google.android.material.button.MaterialButton btnAccept = new com.google.android.material.button.MaterialButton(getContext());
                 btnAccept.setText("Approve");
-                btnAccept.setBackgroundColor(Color.parseColor("#2E7D32"));
+                btnAccept.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#2E7D32")));
                 btnAccept.setTextColor(Color.WHITE);
+                btnAccept.setCornerRadius(50);
 
-                Button btnReject = new Button(getContext());
+                com.google.android.material.button.MaterialButton btnReject = new com.google.android.material.button.MaterialButton(getContext());
                 btnReject.setText("Reject");
-                btnReject.setBackgroundColor(Color.parseColor("#C62828"));
+                btnReject.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#C62828")));
                 btnReject.setTextColor(Color.WHITE);
+                btnReject.setCornerRadius(50);
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                params.setMargins(0, 0, 16, 0);
+                btnAccept.setLayoutParams(params);
 
                 btnAccept.setOnClickListener(v -> {
                     btnAccept.setEnabled(false);
                     btnReject.setEnabled(false);
                     db.collection("loans").document(loanId).update("status", "active")
                             .addOnSuccessListener(aVoid -> {
-                                llRequestsContainer.removeView(txt);
-                                llRequestsContainer.removeView(buttonsGroup);
+                                llRequestsContainer.removeView(cardView);
                                 Toast.makeText(getContext(), "Loan Approved!", Toast.LENGTH_SHORT).show();
                                 loadAllRequests();
                             });
@@ -236,8 +295,7 @@ public class NotificationsFragment extends Fragment {
                     btnReject.setEnabled(false);
                     db.collection("loans").document(loanId).update("status", "rejected")
                             .addOnSuccessListener(aVoid -> {
-                                llRequestsContainer.removeView(txt);
-                                llRequestsContainer.removeView(buttonsGroup);
+                                llRequestsContainer.removeView(cardView);
                                 Toast.makeText(getContext(), "Loan Rejected.", Toast.LENGTH_SHORT).show();
                                 loadAllRequests();
                             });
@@ -245,8 +303,7 @@ public class NotificationsFragment extends Fragment {
 
                 buttonsGroup.addView(btnAccept);
                 buttonsGroup.addView(btnReject);
-                llRequestsContainer.addView(buttonsGroup);
-                tvEmptyNotifications.setVisibility(View.GONE);
+                llContent.addView(buttonsGroup);
 
             } else if ("active".equals(status)) {
                 TextView tvStatus = new TextView(getContext());
@@ -254,9 +311,7 @@ public class NotificationsFragment extends Fragment {
                 tvStatus.setTextColor(Color.parseColor("#2E7D32"));
                 tvStatus.setTypeface(null, android.graphics.Typeface.BOLD);
                 tvStatus.setTextSize(15);
-                tvStatus.setPadding(0, 0, 0, 16);
-                llRequestsContainer.addView(tvStatus);
-                tvEmptyNotifications.setVisibility(View.GONE);
+                llContent.addView(tvStatus);
 
             } else if ("rejected".equals(status)) {
                 TextView tvStatus = new TextView(getContext());
@@ -264,9 +319,7 @@ public class NotificationsFragment extends Fragment {
                 tvStatus.setTextColor(Color.parseColor("#C62828"));
                 tvStatus.setTypeface(null, android.graphics.Typeface.BOLD);
                 tvStatus.setTextSize(15);
-                tvStatus.setPadding(0, 0, 0, 16);
-                llRequestsContainer.addView(tvStatus);
-                tvEmptyNotifications.setVisibility(View.GONE);
+                llContent.addView(tvStatus);
 
             } else if ("settled".equals(status)) {
                 TextView tvStatus = new TextView(getContext());
@@ -274,47 +327,59 @@ public class NotificationsFragment extends Fragment {
                 tvStatus.setTextColor(Color.parseColor("#2E7D32"));
                 tvStatus.setTypeface(null, android.graphics.Typeface.BOLD);
                 tvStatus.setTextSize(15);
-                tvStatus.setPadding(0, 0, 0, 16);
-                llRequestsContainer.addView(tvStatus);
-                tvEmptyNotifications.setVisibility(View.GONE);
+                llContent.addView(tvStatus);
             }
+            
+            tvEmptyNotifications.setVisibility(View.GONE);
         });
     }
 
     private void loadSettlementAppealUI(QueryDocumentSnapshot loanDoc) {
+        if (getContext() == null) return;
+        View cardView = getLayoutInflater().inflate(R.layout.item_notification, llRequestsContainer, false);
+        llRequestsContainer.addView(cardView);
+
         String loanId = loanDoc.getId();
         String borrowerId = loanDoc.getString("borrowerId");
         Double amount = loanDoc.getDouble("amount");
         String desc = loanDoc.getString("description");
 
         db.collection("users").document(borrowerId).get().addOnSuccessListener(userDoc -> {
-            if (getContext() == null) {
-                return;
-            }
             String name = userDoc.getString("name");
             if (name == null) {
                 name = "Unknown borrower";
             }
 
+            LinearLayout llContent = cardView.findViewById(R.id.llNotificationContent);
+
             TextView txt = new TextView(getContext());
             txt.setText(String.format(java.util.Locale.getDefault(),
-                    "\nSettlement Appeal\nFrom: %s\nAmount: Rs. %.2f\nDesc: %s",
+                    "Settlement Appeal\nFrom: %s\nAmount: Rs. %,.0f\nDesc: %s",
                     name, amount != null ? amount : 0.0, desc != null ? desc : "No description"));
             txt.setTextSize(16);
-            txt.setPadding(0, 16, 0, 16);
+            txt.setPadding(0, 0, 0, 16);
 
             LinearLayout buttonsGroup = new LinearLayout(getContext());
             buttonsGroup.setOrientation(LinearLayout.HORIZONTAL);
 
-            Button btnApprove = new Button(getContext());
+            com.google.android.material.button.MaterialButton btnApprove = new com.google.android.material.button.MaterialButton(getContext());
             btnApprove.setText("Settle");
-            btnApprove.setBackgroundColor(Color.parseColor("#2E7D32"));
+            btnApprove.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#2E7D32")));
             btnApprove.setTextColor(Color.WHITE);
+            btnApprove.setCornerRadius(50);
 
-            Button btnDecline = new Button(getContext());
+            com.google.android.material.button.MaterialButton btnDecline = new com.google.android.material.button.MaterialButton(getContext());
             btnDecline.setText("Keep Active");
-            btnDecline.setBackgroundColor(Color.parseColor("#6D4C41"));
+            btnDecline.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#6D4C41")));
             btnDecline.setTextColor(Color.WHITE);
+            btnDecline.setCornerRadius(50);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(0, 0, 16, 0);
+            btnApprove.setLayoutParams(params);
 
             btnApprove.setOnClickListener(v -> {
                 btnApprove.setEnabled(false);
@@ -325,8 +390,7 @@ public class NotificationsFragment extends Fragment {
                         "settlementRequestedBy", null,
                         "settlementRequestedAt", 0L
                 ).addOnSuccessListener(aVoid -> {
-                    llRequestsContainer.removeView(txt);
-                    llRequestsContainer.removeView(buttonsGroup);
+                    llRequestsContainer.removeView(cardView);
                     Toast.makeText(getContext(), "Loan settled.", Toast.LENGTH_SHORT).show();
                     loadAllRequests();
                 });
@@ -340,8 +404,7 @@ public class NotificationsFragment extends Fragment {
                         "settlementRequestedBy", null,
                         "settlementRequestedAt", 0L
                 ).addOnSuccessListener(aVoid -> {
-                    llRequestsContainer.removeView(txt);
-                    llRequestsContainer.removeView(buttonsGroup);
+                    llRequestsContainer.removeView(cardView);
                     Toast.makeText(getContext(), "Settlement appeal declined.", Toast.LENGTH_SHORT).show();
                     loadAllRequests();
                 });
@@ -350,8 +413,9 @@ public class NotificationsFragment extends Fragment {
             buttonsGroup.addView(btnApprove);
             buttonsGroup.addView(btnDecline);
 
-            llRequestsContainer.addView(txt);
-            llRequestsContainer.addView(buttonsGroup);
+            llContent.addView(txt);
+            llContent.addView(buttonsGroup);
+
             tvEmptyNotifications.setVisibility(View.GONE);
         });
     }

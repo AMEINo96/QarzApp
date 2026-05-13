@@ -125,18 +125,57 @@ public class MainActivity extends AppCompatActivity {
         if (mAuth.getCurrentUser() == null) return;
         String currentUserId = mAuth.getCurrentUser().getUid();
 
+        // 1. Listen for new Friend Requests (in connections document)
+        db.collection("connections").document(currentUserId)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null || value == null || !value.exists()) return;
+                    
+                    java.util.Map<String, Object> data = value.getData();
+                    if (data != null) {
+                        int friendRequestCount = 0;
+                        for (java.util.Map.Entry<String, Object> entry : data.entrySet()) {
+                            if ("requested".equals(entry.getValue())) {
+                                friendRequestCount++;
+                            }
+                        }
+                        
+                        if (friendRequestCount > 0) {
+                            com.qarz.app.utils.NotificationHelper.showNotification(
+                                    this, 
+                                    "New Friend Request", 
+                                    "You have " + friendRequestCount + " new friend request(s)!", 
+                                    101
+                            );
+                        }
+                    }
+                });
+
+        // 2. Listen for new Loan Requests
         db.collection("loans")
                 .whereEqualTo("borrowerId", currentUserId)
                 .whereEqualTo("status", "pending")
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
-                        Log.w("MainActivity", "Listen failed.", error);
+                        Log.w("MainActivity", "Loan listen failed.", error);
                         return;
                     }
-                    pendingBorrowerRequests = value != null ? value.size() : 0;
+                    int newCount = value != null ? value.size() : 0;
+                    
+                    // Show notification if count increased
+                    if (newCount > pendingBorrowerRequests) {
+                        com.qarz.app.utils.NotificationHelper.showNotification(
+                                this, 
+                                "New Loan Request", 
+                                "Someone has sent you a loan request to approve.", 
+                                102
+                        );
+                    }
+                    
+                    pendingBorrowerRequests = newCount;
                     updateNotificationBadge();
                 });
 
+        // 3. Listen for Settlement Appeals
         db.collection("loans")
                 .whereEqualTo("lenderId", currentUserId)
                 .whereEqualTo("status", "active")
@@ -146,7 +185,18 @@ public class MainActivity extends AppCompatActivity {
                         Log.w("MainActivity", "Settlement appeal listener failed.", error);
                         return;
                     }
-                    pendingSettlementAppeals = value != null ? value.size() : 0;
+                    int newCount = value != null ? value.size() : 0;
+
+                    if (newCount > pendingSettlementAppeals) {
+                        com.qarz.app.utils.NotificationHelper.showNotification(
+                                this, 
+                                "Settlement Appeal", 
+                                "A borrower has requested to settle a loan.", 
+                                103
+                        );
+                    }
+
+                    pendingSettlementAppeals = newCount;
                     updateNotificationBadge();
                 });
     }
@@ -180,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
     private void scheduleOverdueReminders() {
         // Run daily to check for overdue loans
         PeriodicWorkRequest reminderRequest = new PeriodicWorkRequest.Builder(
-                OverdueReminderWorker.class, 24, TimeUnit.HOURS)
+                OverdueReminderWorker.class, 15, TimeUnit.MINUTES)
                 .build();
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(

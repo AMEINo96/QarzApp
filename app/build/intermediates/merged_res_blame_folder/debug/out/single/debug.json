@@ -1,202 +1,206 @@
 [
     {
-        "merged": "com.qarz.app-merged_res-44:/color_bottom_nav_tint.xml.flat",
-        "source": "com.qarz.app-main-46:/color/bottom_nav_tint.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_ic_menu_circle.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\ic_menu_circle.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_ic_menu_circle.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/ic_menu_circle.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_bg_top_panel.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\bg_top_panel.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_item_tab_loan.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/item_tab_loan.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\mipmap-mdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_activity_add_loan.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/activity_add_loan.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\mipmap-xxxhdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/mipmap-xhdpi_ic_launcher_round.png.flat",
-        "source": "com.qarz.app-main-46:/mipmap-xhdpi/ic_launcher_round.png"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\mipmap-xhdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_fragment_notifications.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/fragment_notifications.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_fragment_notifications.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\fragment_notifications.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.qarz.app-main-46:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_fragment_my_debts.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\fragment_my_debts.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_activity_register.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/activity_register.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_activity_requests.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\activity_requests.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_ic_nav_dashboard.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/ic_nav_dashboard.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_activity_login.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\activity_login.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_bg_surface_panel.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/bg_surface_panel.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_ic_google.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\ic_google.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/menu_bottom_nav_menu.xml.flat",
-        "source": "com.qarz.app-main-46:/menu/bottom_nav_menu.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_bg_avatar_circle.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\bg_avatar_circle.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "com.qarz.app-main-46:/mipmap-mdpi/ic_launcher.png"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "com.qarz.app-main-46:/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "com.qarz.app-merged_res-44:/layout_item_notification.xml.flat",
+        "source": "com.qarz.app-main-46:/layout/item_notification.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_activity_main.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/activity_main.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_fragment_dashboard.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\fragment_dashboard.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_ic_nav_debts.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/ic_nav_debts.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_activity_complete_profile.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\activity_complete_profile.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "com.qarz.app-main-46:/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_fragment_friends.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\fragment_friends.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_activity_complete_profile.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/activity_complete_profile.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_ic_nav_loans.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\ic_nav_loans.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_ic_copy.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/ic_copy.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_bg_screen_gradient.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\bg_screen_gradient.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_fragment_dashboard.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/fragment_dashboard.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_ic_nav_requests.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\ic_nav_requests.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_ic_nav_friends.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/ic_nav_friends.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_ic_copy.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\ic_copy.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "com.qarz.app-main-46:/mipmap-xxxhdpi/ic_launcher_round.png"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\activity_main.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "com.qarz.app-main-46:/mipmap-xhdpi/ic_launcher.png"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\mipmap-hdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_activity_search_user.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/activity_search_user.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_ic_launcher_foreground_logo.png.flat",
-        "source": "com.qarz.app-main-46:/drawable/ic_launcher_foreground_logo.png"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\menu_bottom_nav_menu.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\menu\\bottom_nav_menu.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_bg_summary_negative.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/bg_summary_negative.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_item_tab_loan.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\item_tab_loan.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "com.qarz.app-main-46:/mipmap-hdpi/ic_launcher.png"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_fragment_my_loans.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\fragment_my_loans.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_fragment_my_loans.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/fragment_my_loans.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_activity_dealings.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\activity_dealings.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/mipmap-hdpi_ic_launcher_round.png.flat",
-        "source": "com.qarz.app-main-46:/mipmap-hdpi/ic_launcher_round.png"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\mipmap-mdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_activity_profile.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/activity_profile.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\color_bottom_nav_tint.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\color\\bottom_nav_tint.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "com.qarz.app-main-46:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_ic_nav_dashboard.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\ic_nav_dashboard.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_bg_bottom_nav.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/bg_bottom_nav.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\mipmap-xxhdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_bg_top_panel.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/bg_top_panel.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\mipmap-xxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_activity_requests.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/activity_requests.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_bg_summary_positive.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\bg_summary_positive.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_fragment_my_debts.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/fragment_my_debts.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_bg_surface_panel.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\bg_surface_panel.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_bg_screen_gradient.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/bg_screen_gradient.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_bg_overdue_panel.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\bg_overdue_panel.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_item_friend.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/item_friend.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_activity_search_user.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\activity_search_user.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_item_loan.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/item_loan.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\mipmap-xxxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_bg_overdue_panel.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/bg_overdue_panel.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_ic_nav_friends.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\ic_nav_friends.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_activity_login.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/activity_login.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\mipmap-hdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_activity_dealings.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/activity_dealings.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_bg_summary_negative.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\bg_summary_negative.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/ic_launcher_foreground.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_activity_add_loan.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\activity_add_loan.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/ic_launcher_background.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_ic_launcher_foreground_logo.png.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\ic_launcher_foreground_logo.png"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_bg_summary_positive.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/bg_summary_positive.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_activity_register.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\activity_register.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/layout_fragment_friends.xml.flat",
-        "source": "com.qarz.app-main-46:/layout/fragment_friends.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_ic_nav_debts.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\ic_nav_debts.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/mipmap-xxhdpi_ic_launcher_round.png.flat",
-        "source": "com.qarz.app-main-46:/mipmap-xxhdpi/ic_launcher_round.png"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_bg_avatar_circle.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/bg_avatar_circle.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_item_loan.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\item_loan.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/mipmap-mdpi_ic_launcher_round.png.flat",
-        "source": "com.qarz.app-main-46:/mipmap-mdpi/ic_launcher_round.png"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\mipmap-xhdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_ic_nav_requests.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/ic_nav_requests.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_item_friend.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\item_friend.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_ic_nav_loans.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/ic_nav_loans.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\layout_activity_profile.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\layout\\activity_profile.xml"
     },
     {
-        "merged": "com.qarz.app-merged_res-44:/drawable_ic_google.xml.flat",
-        "source": "com.qarz.app-main-46:/drawable/ic_google.xml"
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_bg_bottom_nav.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\bg_bottom_nav.xml"
+    },
+    {
+        "merged": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-merged_res-44:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\muham\\.gradle\\daemon\\8.2\\com.qarz.app-main-46:\\drawable\\ic_launcher_background.xml"
     }
 ]

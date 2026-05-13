@@ -49,6 +49,7 @@ id btnLogin
 id btnLogout
 id btnNewLoan
 id btnRegister
+id btnRemoveFriend
 id btnSaveLoan
 id btnSearch
 id btnSelectDueDate
@@ -104,6 +105,7 @@ id layoutSharedLoan
 id layout_active_loans
 id layout_past_loans
 id llFriendsContainer
+id llNotificationContent
 id llOverdueGuarantor
 id llRequestsContainer
 id navigation_dashboard
@@ -167,6 +169,7 @@ layout fragment_my_loans
 layout fragment_notifications
 layout item_friend
 layout item_loan
+layout item_notification
 layout item_tab_loan
 menu bottom_nav_menu
 mipmap ic_launcher

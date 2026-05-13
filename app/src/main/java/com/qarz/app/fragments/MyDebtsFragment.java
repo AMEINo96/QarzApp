@@ -97,11 +97,14 @@ public class MyDebtsFragment extends Fragment {
                             String name = userDoc.getString("name");
                             if (name == null) name = "Unknown Lender";
                             
-                            tempDebts.add(new DisplayLoan(doc.getId(), name, amount != null ? amount : 0, desc));
+                            Long createdAt = doc.getLong("createdAt");
+                            long time = createdAt != null ? createdAt : 0L;
+                            tempDebts.add(new DisplayLoan(doc.getId(), name, amount != null ? amount : 0, desc, time));
                             
                             completedCount[0]++;
                             if (completedCount[0] == totalDocs) {
                                 progressBar.setVisibility(View.GONE);
+                                java.util.Collections.sort(tempDebts, (d1, d2) -> Long.compare(d2.getCreatedAt(), d1.getCreatedAt()));
                                 debtsList.clear();
                                 debtsList.addAll(tempDebts);
                                 adapter.notifyDataSetChanged();
@@ -111,6 +114,7 @@ public class MyDebtsFragment extends Fragment {
                             completedCount[0]++;
                             if (completedCount[0] == totalDocs) {
                                 progressBar.setVisibility(View.GONE);
+                                java.util.Collections.sort(tempDebts, (d1, d2) -> Long.compare(d2.getCreatedAt(), d1.getCreatedAt()));
                                 debtsList.clear();
                                 debtsList.addAll(tempDebts);
                                 adapter.notifyDataSetChanged();

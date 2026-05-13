@@ -116,6 +116,27 @@ public class FriendsListFragment extends Fragment {
                 startActivity(intent);
             });
 
+            Button btnRemoveFriend = itemFriend.findViewById(R.id.btnRemoveFriend);
+            btnRemoveFriend.setOnClickListener(v -> {
+                new android.app.AlertDialog.Builder(getContext())
+                        .setTitle("Remove Friend")
+                        .setMessage("Are you sure you want to remove " + fName + "?")
+                        .setPositiveButton("Remove", (dialog, which) -> {
+                            btnRemoveFriend.setEnabled(false);
+                            db.collection("connections").document(currentUserId).update(friendId, com.google.firebase.firestore.FieldValue.delete())
+                                    .addOnSuccessListener(aVoid -> {
+                                        db.collection("connections").document(friendId).update(currentUserId, com.google.firebase.firestore.FieldValue.delete());
+                                        llFriendsContainer.removeView(itemFriend);
+                                        Toast.makeText(getContext(), fName + " removed.", Toast.LENGTH_SHORT).show();
+                                        if (llFriendsContainer.getChildCount() == 0) {
+                                            tvEmptyFriends.setVisibility(View.VISIBLE);
+                                        }
+                                    });
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+            });
+
             tvEmptyFriends.setVisibility(View.GONE);
             llFriendsContainer.addView(itemFriend);
         });

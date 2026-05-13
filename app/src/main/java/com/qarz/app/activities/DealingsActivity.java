@@ -126,6 +126,22 @@ public class DealingsActivity extends AppCompatActivity {
         layout_active_loans.removeAllViews();
         layout_past_loans.removeAllViews();
         
+        java.util.Collections.sort(theyOweMeList, (d1, d2) -> {
+            Long t1 = d1.getLong("createdAt");
+            Long t2 = d2.getLong("createdAt");
+            if (t1 == null) t1 = 0L;
+            if (t2 == null) t2 = 0L;
+            return t2.compareTo(t1);
+        });
+
+        java.util.Collections.sort(iOweThemList, (d1, d2) -> {
+            Long t1 = d1.getLong("createdAt");
+            Long t2 = d2.getLong("createdAt");
+            if (t1 == null) t1 = 0L;
+            if (t2 == null) t2 = 0L;
+            return t2.compareTo(t1);
+        });
+        
         double totalTheyOweMe = 0;
         double totalIOweThem = 0;
 
@@ -149,8 +165,8 @@ public class DealingsActivity extends AppCompatActivity {
             addLoanToUI(doc, false, status);
         }
 
-        tvTheyOweMe.setText(String.format("Rs. %.2f", totalTheyOweMe));
-        tvIOweThem.setText(String.format("Rs. %.2f", totalIOweThem));
+        tvTheyOweMe.setText(String.format(java.util.Locale.getDefault(), "Rs. %,.0f", totalTheyOweMe));
+        tvIOweThem.setText(String.format(java.util.Locale.getDefault(), "Rs. %,.0f", totalIOweThem));
         tvEmptyActiveDealings.setVisibility(layout_active_loans.getChildCount() == 0 ? View.VISIBLE : View.GONE);
         tvEmptyPastDealings.setVisibility(layout_past_loans.getChildCount() == 0 ? View.VISIBLE : View.GONE);
     }
@@ -213,7 +229,7 @@ public class DealingsActivity extends AppCompatActivity {
         } else {
             tvDesc.setText(desc);
         }
-        tvAmt.setText(String.format("Rs. %.2f", amt != null ? amt : 0.0));
+        tvAmt.setText(String.format(java.util.Locale.getDefault(), "Rs. %,.0f", amt != null ? amt : 0.0));
 
         if (iAmLender) {
             tvContext.setText("You lent them");

@@ -34,7 +34,7 @@ public class TabLoanAdapter extends RecyclerView.Adapter<TabLoanAdapter.ViewHold
         DisplayLoan loan = loansList.get(position);
         holder.tvName.setText(loan.getDisplayTitle());
         holder.tvDesc.setText(loan.getDescription() != null && !loan.getDescription().trim().isEmpty() ? loan.getDescription() : "No description");
-        holder.tvAmount.setText(String.format("Rs. %.2f", loan.getAmount()));
+        holder.tvAmount.setText(String.format("Rs. %,.0f", loan.getAmount()));
         
         holder.tvUid.setText("UID: " + loan.getLoanId());
         holder.ivCopy.setOnClickListener(v -> {

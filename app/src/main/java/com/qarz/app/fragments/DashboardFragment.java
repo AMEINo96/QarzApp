@@ -112,7 +112,7 @@ public class DashboardFragment extends Fragment {
                         String receiptText = "Loan UID: " + uid + "\n\n" +
                                              "Lender Name: " + (lenderName != null ? lenderName : "Unknown") + "\n" +
                                              "Borrower Name: " + (borrowerName != null ? borrowerName : "Unknown") + "\n" +
-                                             "Amount Value: Rs" + String.format("%.2f", amount != null ? amount : 0) + "\n\n" +
+                                             "Amount Value: " + String.format(java.util.Locale.getDefault(), "Rs. %,.0f", amount != null ? amount : 0.0) + "\n\n" +
                                              "Current Status: " + (status != null ? status.toUpperCase() : "UNKNOWN");
                                              
                         new android.app.AlertDialog.Builder(getContext())
@@ -150,7 +150,7 @@ public class DashboardFragment extends Fragment {
                         }
                     }
                     if (tvOweMeTotal != null) {
-                        tvOweMeTotal.setText(String.format("Rs. %.2f", totalOweMe));
+                        tvOweMeTotal.setText(String.format(java.util.Locale.getDefault(), "Rs. %,.0f", totalOweMe));
                         currentTotalOweMe = totalOweMe;
                         updateChart(currentTotalOweMe, currentTotalIOwe);
                     }
@@ -174,7 +174,7 @@ public class DashboardFragment extends Fragment {
                         }
                     }
                     if (tvIOweTotal != null) {
-                        tvIOweTotal.setText(String.format("Rs. %.2f", totalIOwe));
+                        tvIOweTotal.setText(String.format(java.util.Locale.getDefault(), "Rs. %,.0f", totalIOwe));
                         currentTotalIOwe = totalIOwe;
                         updateChart(currentTotalOweMe, currentTotalIOwe);
                     }
@@ -200,10 +200,22 @@ public class DashboardFragment extends Fragment {
         dataSet.setColors(colors);
         dataSet.setValueTextSize(16f);
         dataSet.setValueTextColor(Color.WHITE);
+        dataSet.setValueTypeface(android.graphics.Typeface.DEFAULT_BOLD);
+        dataSet.setValueFormatter(new com.github.mikephil.charting.formatter.ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format(java.util.Locale.getDefault(), "Rs. %,d", (int) value);
+            }
+        });
 
         PieData data = new PieData(dataSet);
         
         pieChart.setData(data);
+        pieChart.setDrawEntryLabels(true);
+        pieChart.setEntryLabelColor(Color.WHITE);
+        pieChart.setEntryLabelTextSize(14f);
+        pieChart.setEntryLabelTypeface(android.graphics.Typeface.DEFAULT_BOLD);
+
         pieChart.getDescription().setEnabled(false);
         pieChart.setDrawHoleEnabled(true);
         pieChart.setHoleColor(Color.TRANSPARENT);

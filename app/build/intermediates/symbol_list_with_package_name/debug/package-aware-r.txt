@@ -3267,6 +3267,7 @@ id btnLogin
 id btnLogout
 id btnNewLoan
 id btnRegister
+id btnRemoveFriend
 id btnSaveLoan
 id btnSearch
 id btnSelectDueDate
@@ -3466,6 +3467,7 @@ id linear
 id listMode
 id list_item
 id llFriendsContainer
+id llNotificationContent
 id llOverdueGuarantor
 id llRequestsContainer
 id m3_side_sheet
@@ -3919,6 +3921,7 @@ layout fragment_my_loans
 layout fragment_notifications
 layout item_friend
 layout item_loan
+layout item_notification
 layout item_tab_loan
 layout m3_alert_dialog
 layout m3_alert_dialog_actions

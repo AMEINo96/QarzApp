@@ -31,13 +31,29 @@
             android:textColor="@color/md_theme_onSurfaceVariant"
             android:layout_marginTop="2dp" />
 
-        <Button
-            android:id="@+id/btnCheckDealings"
-            style="@style/QarzButtonSecondary"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Check Dealings"
-            android:layout_marginTop="14dp" />
+            android:orientation="horizontal"
+            android:layout_marginTop="14dp">
+
+            <Button
+                android:id="@+id/btnCheckDealings"
+                style="@style/QarzButtonSecondary"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Check Dealings" />
+
+            <Button
+                android:id="@+id/btnRemoveFriend"
+                style="@style/QarzButtonSecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/md_theme_danger"
+                android:text="Remove" />
+        </LinearLayout>
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
